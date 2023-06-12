@@ -1,7 +1,5 @@
 import streamlit as st
-from  PIL import Image
-
-
+# from PIL import Image
 from streamlit_option_menu import option_menu
 
 # 1. as sidebar menu
@@ -191,8 +189,8 @@ if selected == "Home":
     # favorite_command = edited_df.loc[edited_df["rating"].idxmax()]["command"]
     # st.markdown(f"Your favorite command is **{favorite_command}** 🎈")
 
-logo = Image.open(r'C:\Users\barba\PycharmProjects\pythonProject\2023_works\1.jpg')
-profile = Image.open(r'C:\Users\barba\PycharmProjects\pythonProject\2023_works\2.jpg')
+# logo = Image.open(r'C:\Users\barba\PycharmProjects\pythonProject\2023_works\1.jpg')
+# profile = Image.open(r'C:\Users\barba\PycharmProjects\pythonProject\2023_works\2.jpg')
 
 if selected == "About":
     col1, col2 = st.columns([0.8, 0.2])
@@ -201,11 +199,11 @@ if selected == "About":
         font-size:35px ; font-family: 'Cooper Black'; color: #FF9633;} 
         </style> """, unsafe_allow_html=True)
         st.markdown('<p class="font">About the Creator</p>', unsafe_allow_html=True)
-    with col2:  # To display brand log
-        st.image(logo, width=130)
+    # with col2:  # To display brand log
+        # st.image(logo, width=130)
 
     st.write("Seyhun Barbaros YABACI")
-    st.image(profile, width=700)
+    # st.image(profile, width=700)
 
 if selected == "Maps":
     st.write("To view Maps")
