@@ -4,7 +4,7 @@ from streamlit_option_menu import option_menu
 
 # 1. as sidebar menu
 with st.sidebar:
-    selected = option_menu("Main Menu", ["Home", "Upload", "Tasks",'Maps', 'Settings', 'About'], icons=['house', 'gear'], menu_icon="cast", default_index=1)
+    selected = option_menu("Main Menu", ["Home", "Upload", "Tasks",'Maps', 'Settings', 'About'], icons=['house', 'gear'], menu_icon="cast", default_index=0)
 
 if selected == "Home":
     x = st.slider("Select a value")
