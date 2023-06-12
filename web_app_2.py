@@ -1,3 +1,7 @@
+import streamlit as st
+import pandas as pd
+from  PIL import Image
+
 x = st.slider("Select a value")
 st.write(x, "squared is", x * x)
 no_of_sets = 3
