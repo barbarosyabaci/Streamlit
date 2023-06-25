@@ -1,3 +1,7 @@
 pandas==1.2.5
 streamlit==1.23.1
 streamlit-option-menu==0.3.6
+altair == 5.0.1
+numpy == 1.21.0
+pydeck == 0.8.1b0
+
