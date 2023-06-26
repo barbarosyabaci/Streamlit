@@ -77,13 +77,13 @@ if selected == "Geolocation Based RAN Planning":
     if len(Total_output) != 1:
         Total_output = Total_output.iloc[1:]
 
-    csv = convert_df(Total_output)
-    st.download_button(label="Download Result File", data=csv, file_name='Total_output.csv', mime='text/csv', )
 
     max_lat = Total_output["lat"].max()
     min_lat = Total_output["lat"].min()
     max_lon = Total_output["lon"].max()
     min_lon = Total_output["lon"].min()
+    lat_center = (max_lat + min_lat) / 2,
+    lon_center = (max_lon + min_lon) / 2,
 
     # st.write(max_lat, min_lat,max_lon,min_lon)
 
@@ -99,7 +99,10 @@ if selected == "Geolocation Based RAN Planning":
     import pydeck as pdk
 
     Total_output["labels"] =  Total_output["GC_Name"].str[0:3]+ "_" + Total_output["group"].astype(str)
-    chart_data = Total_output[["lat","lon","Sarf","GC_Name","labels"]]
+    csv = convert_df(Total_output)
+    st.download_button(label="Download Result File", data=csv, file_name='Total_output.csv', mime='text/csv', )
+
+    chart_data = Total_output[["lat","lon","Sarf","GC_Name","labels"]]# ,"Power","Height","Site Azimuths"]]
     # chart_data["Labels"] = Output_table["GC_Name"] + "_" + Output_table["group"].astype(str)
 
     st.pydeck_chart(pdk.Deck(
@@ -117,6 +120,8 @@ if selected == "Geolocation Based RAN Planning":
                 get_position='[lon, lat]',
                 get_color='[200, 30, 0, 160]',
                 get_radius=20,
+                pickable=True,
+                tooltip=True,
             ),
             pdk.Layer(type="TextLayer",
                 data=chart_data,
@@ -132,6 +137,7 @@ if selected == "Geolocation Based RAN Planning":
             ),
 
         ],
+        tooltip={"text": "Site: {Sarf}\nlat: {lat}\nlon: {lon}"}
     ))
 
     st.divider()  # 👈 Draws a horizontal rule
@@ -239,9 +245,7 @@ if selected == "Performance Analysis Tools":
     st.header('Map and table views')
 
     df_tokyo_1 = pd.DataFrame(
-        np.random.randn(300, 2) / [50, 50] + [ 35.690459, 139.695575],
-
-        columns=['lat', 'lon'])
+        np.random.randn(300, 2) / [50, 50] + [ 35.690459, 139.695575],columns=['lat', 'lon'])
 
 
     # st.write(os.getcwd())
@@ -345,8 +349,57 @@ if selected == "Machine Learning / AI use case design optimization projects":
         uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="4")
 
 if selected == "RAN Monitoring Tools":
-        st.title('RAN Monitoring Tools')
-        uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="1")
+    import pandas as pd
+    import numpy as np
+
+    st.title('RAN Monitoring Tools')
+    df_tokyo = pd.DataFrame(np.random.randn(2000, 2) / [30, 30] + [35.690459, 139.695575], columns=['lat', 'lon'])
+    def convert_df(df):
+        return df.to_csv().encode('utf-8')
+
+    csv = convert_df(df_tokyo)
+    st.download_button(label="Download Result File", data=csv, file_name='Total_output.csv', mime='text/csv', )
+
+    import pydeck as pdk
+
+    chart_data = df_tokyo[["lat","lon"]]
+
+    max_lat = df_tokyo["lat"].max()
+    min_lat = df_tokyo["lat"].min()
+    max_lon = df_tokyo["lon"].max()
+    min_lon = df_tokyo["lon"].min()
+
+    st.pydeck_chart(pdk.Deck(
+        map_style=None,
+        initial_view_state=pdk.ViewState(
+            latitude=(max_lat + min_lat)/2,
+            longitude=(max_lon + min_lon)/2,
+            zoom=11,
+            pitch=0,
+        ),
+        layers=[
+            pdk.Layer(
+                'ScatterplotLayer',
+                data=chart_data,
+                get_position='[lon, lat]',
+                get_color='[200, 30, 0, 160]',
+                get_radius=50,
+            ),
+            pdk.Layer(type="TextLayer",
+                data=chart_data,
+                pickable=False,
+                get_position=["lon", "lat"],
+                get_text="labels",
+                get_size=12,
+                get_color=[0, 0, 0],
+                get_angle=0, # Note that string constants in pydeck are explicitly passed as strings
+                # This distinguishes them from columns in a data set
+                getTextAnchor='"middle"',
+                get_alignment_baseline='"bottom"'
+            ),
+
+        ],
+    ))
 
 if selected == "Database Monitoring Tools":
         st.title('Database Monitoring Tools')
