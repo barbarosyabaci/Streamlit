@@ -8,7 +8,9 @@ with st.sidebar:
         "Performance Analysis Tools",
         "Data Migration Tools",
         "Machine Learning / AI use case design optimization projects",
-        "RAN Monitoring Tools", "Database Monitoring Tools"
+        "RAN Monitoring Tools",
+        "Database Monitoring Tools",
+        "dB Management Tools"
     ], menu_icon="cast", default_index=0)
 
 if selected == "Geolocation Based RAN Planning":
@@ -183,7 +185,7 @@ if selected == "Data Migration Tools":
             st.write(uploaded_file[i].name)
             if uploaded_file[i].name == "Cells_LTE_subset.csv":
                 Cells_LTE = pd.read_csv(uploaded_file[i],  index_col=False)
-                st.write(Cells_LTE)
+                # st.write(Cells_LTE)
             if uploaded_file[i].name == "Cells_NR_subset.csv":
                 Cells_NR = pd.read_csv(uploaded_file[i],  index_col=False)
             if uploaded_file[i].name == "Sites.csv":
@@ -235,6 +237,142 @@ if selected == "Data Migration Tools":
 
     st.header('Check Atoll Data for inconsistencies')
 
+if selected == "Machine Learning / AI use case design optimization projects":
+        st.title('Machine Learning Network Performance Booster Toools')
+        st.divider()  # 👈 Draws a horizontal rule
+        st.header('KPI Anomaly Heat-Map')
+        uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="1")
+        st.divider()  # 👈 Draws a horizontal rule
+        st.header('Silent Issue detection')
+        uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="2")
+        st.divider()  # 👈 Draws a horizontal rule
+        st.header('Load Balance/Mobility load balance parameter optimization')
+        uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="3")
+        st.divider()  # 👈 Draws a horizontal rule
+        st.header('Energy Efficiency Management')
+        uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="4")
+
+if selected =="dB Management Tools":
+    from pymongo.mongo_client import MongoClient
+    from pymongo.server_api import ServerApi
+    import pandas as pd
+
+    st.title('Database Management Tools')
+    st.header('Database Connection')
+
+    if st.button('Connect dB'):
+        uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+        cluster = MongoClient(uri, server_api=ServerApi('1'))
+        try:
+            cluster.admin.command('ping')
+            print("Pinged your deployment. You successfully connected to MongoDB!")
+        except Exception as e:
+            print(e)
+
+    st.divider()  # 👈 Draws a horizontal rule
+    st.header('List Databases in cluster')
+
+    # cl_name = st.text_input('Cluster name:')
+    if st.button('List Databases in cluster'):
+        uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+        cluster = MongoClient(uri, server_api=ServerApi('1'))
+        try:
+            cluster.admin.command('ping')
+            print("Pinged your deployment. You successfully connected to MongoDB!")
+        except Exception as e:
+            print(e)
+        df_1 = pd.DataFrame(list(cluster.list_databases()))
+        # for i in df_1[]
+        st.write(df_1)
+
+    st.divider()  # 👈 Draws a horizontal rule
+    st.header('List Collections in Databases')
+
+    db_name = st.text_input('Database name:')
+
+    if st.button("List Collection names"):
+        uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+        cluster = MongoClient(uri, server_api=ServerApi('1'))
+        try:
+            cluster.admin.command('ping')
+            print("Pinged your deployment. You successfully connected to MongoDB!")
+        except Exception as e:
+            print(e)
+        db = cluster[db_name]
+        # collections_df = pd.DataFrame(list(db.list_collection_names()))
+
+        collection_names = db.list_collection_names()
+        collection_numbers = []
+
+        for i in collection_names:
+            print(i, db[i].count_documents({}))
+            collection_numbers.append(db[i].count_documents({}))
+
+        collections_df = pd.DataFrame(columns=['Names', 'Number of Docs'])
+        collections_df['Names'] = collection_names
+        collections_df['Number of Docs'] = collection_numbers
+
+        st.write(collections_df)
+
+    st.divider()  # 👈 Draws a horizontal rule
+    st.header('Update Sites Collection with CSV file')
+    db_name_update = st.text_input('Collection name to update')
+    uploaded_file = st.file_uploader("Choose input CSV file to process", type="csv", accept_multiple_files=False)
+
+    if st.button('Update Sites Collection'):
+        import pandas as pd
+        uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+        cluster = MongoClient(uri, server_api=ServerApi('1'))
+        db = cluster["Sites"]
+
+        df_tokyo = pd.read_csv(uploaded_file, index_col=False)
+        df_tokyo["_id"] = df_tokyo["Site Name"]
+        df_tokyo.reset_index(inplace=True)
+
+        df_tokyo_dict = df_tokyo.to_dict("records")
+        db[db_name_update].insert_many(df_tokyo.to_dict('records'))
+
+    st.divider()  # 👈 Draws a horizontal rule
+
+    st.header('Create a Database')
+    db_name = st.text_input('dB name to create')
+    if st.button('Create dB'):
+        uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+        cluster = MongoClient(uri, server_api=ServerApi('1'))
+        st.write('dB Created:', db_name)
+        db = cluster["UserData"]
+        collection = db[db_name]
+        collection.insert_one({"_id": "Temp", "user_name": "byabaci"})
+
+    st.divider()  # 👈 Draws a horizontal rule
+    st.header('Delete Collection')
+
+    db_name_del = st.text_input('dB name:')
+    collection_name_del = st.text_input('Collection name:')
+
+    if st.button('delete dB'):
+        uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+        cluster = MongoClient(uri, server_api=ServerApi('1'))
+        db = cluster[db_name_del]
+        st.write("Collection Deleted:", collection_name_del)
+        db[collection_name_del].drop()
+
+    st.divider()  # 👈 Draws a horizontal rule
+    st.header('Read Collection')
+
+    db_name_read = st.text_input('dB name to read')
+    collection_name = st.text_input('Collection name to read')
+    if st.button('Read Collection'):
+        import pandas as pd
+        uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+        cluster = MongoClient(uri, server_api=ServerApi('1'))
+        db = cluster[db_name_read]
+        all_data_from_db = db[collection_name].find({})
+        df = pd.DataFrame(list(all_data_from_db))
+        st.write(df)
+if selected == "Database Monitoring Tools":
+        st.title('Database Monitoring Tools')
+        uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="1")
 if selected == "Performance Analysis Tools":
 
     import pandas as pd
@@ -244,26 +382,22 @@ if selected == "Performance Analysis Tools":
     st.title('Site information tools')
     st.header('Map and table views')
 
-    df_tokyo_1 = pd.DataFrame(
-        np.random.randn(300, 2) / [50, 50] + [ 35.690459, 139.695575],columns=['lat', 'lon'])
-
-
     # st.write(os.getcwd())
-    df_tokyo = pd.read_csv("Random_Tokyo.csv",  index_col=False)
+    df_tokyo_1 = pd.read_csv("Random_Tokyo.csv",  index_col=False)
 
 
-    max_lat = df_tokyo["lat"].max()
-    min_lat = df_tokyo["lat"].min()
-    max_lon = df_tokyo["lon"].max()
-    min_lon = df_tokyo["lon"].min()
+    max_lat = df_tokyo_1["lat"].max()
+    min_lat = df_tokyo_1["lat"].min()
+    max_lon = df_tokyo_1["lon"].max()
+    min_lon = df_tokyo_1["lon"].min()
     zoom_level = 15
-    symrad = 30
+    # symrad = 30
 
-    site_list = list(df_tokyo["Site Name"])#
+    site_list = list(df_tokyo_1["Site Name"])#
     # site_list.insert(0, "     ")
     option = st.selectbox('Select Site to see statistics and information', site_list)
 
-    selected = df_tokyo.loc[df_tokyo['Site Name'] == option]
+    selected = df_tokyo_1.loc[df_tokyo_1['Site Name'] == option]
     lat = selected["lat"].iloc[0]
     lon = selected["lon"].iloc[0]
     del selected["labels"]
@@ -287,7 +421,7 @@ if selected == "Performance Analysis Tools":
         layers=[
             pdk.Layer(
                 'ScatterplotLayer',
-                data=df_tokyo,
+                data=df_tokyo_1,
                 get_position='[lon, lat]',
                 get_color='[200, 30, 0, 160]',
                 pickable = True,
@@ -297,7 +431,7 @@ if selected == "Performance Analysis Tools":
                 radiusMaxPixels= 5
             ),
             pdk.Layer(type="TextLayer",
-                data=df_tokyo,
+                data=df_tokyo_1,
                 pickable=False,
                 get_position=["lon", "lat"],
                 get_text="labels",
@@ -325,49 +459,115 @@ if selected == "Performance Analysis Tools":
 
     st.header('Site Statistics')
 
-    option = st.selectbox('Select Site to see statistics and information', site_list,key = "third")
+    option_2 = st.selectbox('Select Site to see statistics and information', site_list,key = "third")
 
     st.divider()  # 👈 Draws a horizontal rule
 
     st.header('Site Configuration Statistics')
 
     uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True)
-
-if selected == "Machine Learning / AI use case design optimization projects":
-        st.title('Machine Learning Network Performance Booster Toools')
-        st.divider()  # 👈 Draws a horizontal rule
-        st.header('KPI Anomaly Heat-Map')
-        uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="1")
-        st.divider()  # 👈 Draws a horizontal rule
-        st.header('Silent Issue detection')
-        uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="2")
-        st.divider()  # 👈 Draws a horizontal rule
-        st.header('Load Balance/Mobility load balance parameter optimization')
-        uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="3")
-        st.divider()  # 👈 Draws a horizontal rule
-        st.header('Energy Efficiency Management')
-        uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="4")
-
 if selected == "RAN Monitoring Tools":
     import pandas as pd
     import numpy as np
+    from pymongo.mongo_client import MongoClient
+    from pymongo.server_api import ServerApi
+    import pydeck as pdk
 
-    st.title('RAN Monitoring Tools')
-    df_tokyo = pd.DataFrame(np.random.randn(2000, 2) / [30, 30] + [35.690459, 139.695575], columns=['lat', 'lon'])
+    st.title('Site view from MongodB database')
+
+    db_name_read = "Sites" # st.text_input('dB name to read')
+    collection_name = "Tokyo_Random_Sites" # st.text_input('Collection name to read')
+    # if st.button('Read Collection'):
+
+    uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+    cluster = MongoClient(uri, server_api=ServerApi('1'))
+    db = cluster[db_name_read]
+    all_data_from_db = db[collection_name].find({})
+    df_tokyo_mongodb = pd.DataFrame(list(all_data_from_db))
+    # st.write(df_tokyo_mongodb)
+
+    zoom_level = 15
+    # symrad = 30
+
+    site_list = list(df_tokyo_mongodb["Site Name"])#
+    # site_list.insert(0, "     ")
+    option = st.selectbox('Select Site to see statistics and information', site_list)
+
+    max_lat = df_tokyo_mongodb["lat"].max()
+    min_lat = df_tokyo_mongodb["lat"].min()
+    max_lon = df_tokyo_mongodb["lon"].max()
+    min_lon = df_tokyo_mongodb["lon"].min()
+
+    selected = df_tokyo_mongodb.loc[df_tokyo_mongodb['Site Name'] == option]
+    lat = selected["lat"].iloc[0]
+    lon = selected["lon"].iloc[0]
+    del selected["labels"]
+    st.table(selected)
+
+    if st.button('View Entire Layer'):
+        zoom_level = 11
+        lat = (max_lat + min_lat)/2
+        lon = (max_lon + min_lon)/2
+    else:
+        pass
+
+    # chart_data = df_tokyo_mongodb[["lat","lon"]]
+
+
+    st.pydeck_chart(pdk.Deck(
+        map_style=None,
+        initial_view_state=pdk.ViewState(
+            latitude= lat,# (max_lat + min_lat)/2,
+            longitude=lon, # (max_lon + min_lon)/2,
+            zoom=zoom_level,
+            pitch=0,
+        ),
+        layers=[
+            pdk.Layer(
+                'ScatterplotLayer',
+                data=df_tokyo_mongodb,
+                get_position='[lon, lat]',
+                get_color='[200, 30, 0, 160]',
+                pickable=True,
+                tooltip=True, radiusScale=5,
+                radiusMinPixels=5,
+                radiusMaxPixels=5,
+                # get_radius=50,
+            ),
+            pdk.Layer(type="TextLayer",
+                data=df_tokyo_mongodb,
+                pickable=False,
+                get_position=["lon", "lat"],
+                get_text="labels",
+                get_size=12,
+                get_color=[0, 0, 0],
+                get_angle=0, # Note that string constants in pydeck are explicitly passed as strings
+                # This distinguishes them from columns in a data set
+                getTextAnchor='"middle"',
+                get_alignment_baseline='"bottom"'
+            ),
+        ],
+        tooltip={"text": "Site: {labels}\nPower: {Power}\nHeight: {Height}\nAzimuths: {Site azimths}"}
+    ))
+
+    st.divider()  # 👈 Draws a horizontal rule
+
+    st.title('Random site generation')
+
+    df_tokyo_gen = pd.DataFrame(np.random.randn(10000, 2) / [20, 20] + [35.690459, 139.695575], columns=['lat', 'lon'])
+
     def convert_df(df):
         return df.to_csv().encode('utf-8')
 
-    csv = convert_df(df_tokyo)
+    csv = convert_df(df_tokyo_gen)
     st.download_button(label="Download Result File", data=csv, file_name='Total_output.csv', mime='text/csv', )
 
-    import pydeck as pdk
+    # chart_data = df_tokyo[["lat","lon"]]
 
-    chart_data = df_tokyo[["lat","lon"]]
-
-    max_lat = df_tokyo["lat"].max()
-    min_lat = df_tokyo["lat"].min()
-    max_lon = df_tokyo["lon"].max()
-    min_lon = df_tokyo["lon"].min()
+    max_lat = df_tokyo_gen["lat"].max()
+    min_lat = df_tokyo_gen["lat"].min()
+    max_lon = df_tokyo_gen["lon"].max()
+    min_lon = df_tokyo_gen["lon"].min()
 
     st.pydeck_chart(pdk.Deck(
         map_style=None,
@@ -380,13 +580,13 @@ if selected == "RAN Monitoring Tools":
         layers=[
             pdk.Layer(
                 'ScatterplotLayer',
-                data=chart_data,
+                data=df_tokyo_gen,
                 get_position='[lon, lat]',
                 get_color='[200, 30, 0, 160]',
                 get_radius=50,
             ),
             pdk.Layer(type="TextLayer",
-                data=chart_data,
+                data=df_tokyo_gen,
                 pickable=False,
                 get_position=["lon", "lat"],
                 get_text="labels",
@@ -397,10 +597,5 @@ if selected == "RAN Monitoring Tools":
                 getTextAnchor='"middle"',
                 get_alignment_baseline='"bottom"'
             ),
-
         ],
     ))
-
-if selected == "Database Monitoring Tools":
-        st.title('Database Monitoring Tools')
-        uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="1")
