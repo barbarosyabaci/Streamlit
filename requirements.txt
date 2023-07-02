@@ -4,5 +4,5 @@ streamlit-option-menu==0.3.6
 altair == 5.0.1
 numpy == 1.21.0
 pydeck == 0.8.1b0
-pymong == 4.4.0
+pymongo == 4.4.0
 
