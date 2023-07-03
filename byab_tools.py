@@ -3,12 +3,12 @@ from streamlit_option_menu import option_menu
 
 with st.sidebar:
     selected = option_menu("Main Menu",[
-        "Geolocation Based RAN Planning",
-        "Geolocation Based RAN Infrastructure Planning",
         "Performance Analysis Tools",
+        "Geolocation Based RAN Planning",
+        "RAN Monitoring Tools",
+        "Geolocation Based RAN Infrastructure Planning",
         "Data Migration Tools",
         "Machine Learning / AI use case design optimization projects",
-        "RAN Monitoring Tools",
         "Database Monitoring Tools",
         "dB Management Tools"
     ], menu_icon="cast", default_index=0)
@@ -31,8 +31,35 @@ if selected == "Geolocation Based RAN Planning":
     # st.write(len(uploaded_file))
     if len(uploaded_file) != 2:
         st.write("Please upload 2 files only")
+    if st.button("Process from online database"):
+        import pandas as pd
+        import numpy as np
+        from pymongo.mongo_client import MongoClient
+        from pymongo.server_api import ServerApi
+        import pydeck as pdk
+        db_name_read = "Sites"  # st.text_input('dB name to read')
+        collection_name = "Tokyo_Random_Sites_2000"  # st.text_input('Collection name to read')
+        # if st.button('Read Collection'):
 
-    if st.button('Process'):
+        uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+        cluster = MongoClient(uri, server_api=ServerApi('1'))
+        db = cluster[db_name_read]
+        all_data_from_db = db[collection_name].find({})
+        site_df = pd.DataFrame(list(all_data_from_db)).head(1000)  # st.write(df_tokyo_mongodb)
+
+        collection_name = "gc_list"
+        gc_data_from_db = db[collection_name].find({})
+        gc_df = pd.DataFrame(list(gc_data_from_db))
+        del site_df["_id"]
+        del site_df["Unnamed: 0"]
+        del site_df["index"]
+        del gc_df["_id"]
+        del gc_df["Unnamed: 0"]
+        del gc_df["index"]
+        # st.write(site_df)
+        # st.write(gc_df)
+
+    if st.button('Process uploaded files'):
     # if uploaded_file is not None:
         # Can be used wherever a "file-like" object is accepted:
         for i in range(len(uploaded_file)):
@@ -40,7 +67,8 @@ if selected == "Geolocation Based RAN Planning":
             if uploaded_file[i].name == "gc_list.csv":
                 gc_df = pd.read_csv(uploaded_file[i],  index_col=0)
             if uploaded_file[i].name == "site_data.csv":
-                site_df = pd.read_csv(uploaded_file[i],  index_col=0)
+                site_df = pd.read_csv(uploaded_file[i],  index_col=0).head(1000)
+
 
     #
 
@@ -153,6 +181,41 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
     st.title('Geolocation Based Transport Infrastructure Planning')
     st.header('Fiber optical line distance analysis')
     uploaded_file = st.file_uploader("Choose input CSV files to process",type= "csv",accept_multiple_files=True,key = "first")
+
+    import pandas as pd
+    import pydeck as pdk
+
+    DATA_URL = "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart-lines.json"
+    df = pd.read_json(DATA_URL)
+
+
+    def hex_to_rgb(h):
+        h = h.lstrip("#")
+        return tuple(int(h[i: i + 2], 16) for i in (0, 2, 4))
+
+
+    df["color"] = df["color"].apply(hex_to_rgb)
+    st.write(df)
+
+    view_state = pdk.ViewState(latitude=37.782556, longitude=-122.3484867, zoom=10)
+
+    st.pydeck_chart(pdk.Deck(
+        map_style=None,
+        initial_view_state= view_state,
+        layers=[
+            pdk.Layer(
+                type="PathLayer",
+                data=df,
+                pickable=True,
+                get_color="color",
+                width_scale=20,
+                width_min_pixels=2,
+                get_path="path",
+                get_width=5
+            ),
+        ],
+        tooltip={"text": "Site: {Sarf}\nlat: {lat}\nlon: {lon}"}
+    ))
     st.divider()  # 👈 Draws a horizontal rule
     st.header('Site candidate Fiber cost opex/capex analysis')
     uploaded_file = st.file_uploader("Choose input CSV files to process",type= "csv",accept_multiple_files=True,key = "second")
@@ -340,7 +403,7 @@ if selected =="dB Management Tools":
         uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
         cluster = MongoClient(uri, server_api=ServerApi('1'))
         st.write('dB Created:', db_name)
-        db = cluster["UserData"]
+        db = cluster["Sites"]
         collection = db[db_name]
         collection.insert_one({"_id": "Temp", "user_name": "byabaci"})
 
@@ -390,7 +453,7 @@ if selected == "Performance Analysis Tools":
     min_lat = df_tokyo_1["lat"].min()
     max_lon = df_tokyo_1["lon"].max()
     min_lon = df_tokyo_1["lon"].min()
-    zoom_level = 15
+    zoom_level = 11
     # symrad = 30
 
     site_list = list(df_tokyo_1["Site Name"])#
