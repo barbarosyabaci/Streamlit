@@ -201,9 +201,9 @@ if selected == "Geolocation Based RAN Planning":
 if selected == "Geolocation Based RAN Infrastructure Planning":
     import pandas as pd
     import pydeck as pdk
-    import fiona
+    # import fiona
     import geopandas as gpd
-    from shapely.geometry import Point, Polygon
+    # from shapely.geometry import Point, Polygon
     import numpy as np
 
     st.title('Geolocation Based Transport Infrastructure Planning')
@@ -212,10 +212,11 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
 
     city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Tel Aviv", "Osaka", "Istanbul","Mainz"]
     option = st.selectbox('Please Select The City to view fiber optical lines', city_list)
+    dir = "C:/Users/barba/Downloads/data/fiber/"
 
-    File_Name = "C:/Users/barba/Downloads/data/fiber/"+ option[:3]+"_fiber.tab"
-    File_Name_2 = "C:/Users/barba/Downloads/data/fiber/" + option[:3] + "_fiber_2.tab"
-    File_Name_3 = "C:/Users/barba/Downloads/data/fiber/" + option[:3] + "_fiber_3.tab"
+    File_Name = option[:3]+"_fiber.tab"
+    File_Name_2 = option[:3] + "_fiber_2.tab"
+    File_Name_3 = option[:3] + "_fiber_3.tab"
     # File_Name = "C:/Users/barba/Downloads/data/fiber/Mainz.tab"
 
     df_tab_file = gpd.read_file(File_Name, driver="MapInfo File")
