@@ -1,0 +1,18 @@
+!table
+!version 900
+!charset Neutral
+
+Definition Table
+  Type NATIVE Charset "Neutral"
+  Fields 11
+    Name Char (254) ;
+    description Char (254) ;
+    timestamp DateTime ;
+    begin DateTime ;
+    end DateTime ;
+    altitudeMode Char (254) ;
+    tessellate Integer (10) ;
+    extrude Integer (10) ;
+    visibility Integer (10) ;
+    drawOrder Integer (10) ;
+    icon Char (254) ;
