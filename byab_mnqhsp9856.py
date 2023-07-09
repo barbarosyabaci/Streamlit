@@ -29,7 +29,7 @@ if selected == "Geolocation Based RAN Planning":
     gc_df = []
     site_df =[]
 
-    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Tel Aviv", "Osaka", "Istanbul"]
+    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo","Osaka","London","Manchester","Birmingham","Tel_Aviv","Jerusalem", "Istanbul","Haifa"]
     option = st.selectbox('Please Select The City', city_list)
     if st.button("Process from online database"):
         import pandas as pd
@@ -62,7 +62,7 @@ if selected == "Geolocation Based RAN Planning":
         # del site_df["Unnamed: 0"]
         del site_df["index"]
 
-        collection_name = "gc_list"
+        collection_name = "gc_list_2"
         gc_data_from_db = db[collection_name].find({})
         gc_df = pd.DataFrame(list(gc_data_from_db))
 
@@ -191,7 +191,7 @@ if selected == "Geolocation Based RAN Planning":
         tooltip={"text": "Site: {Sarf}\nlat: {lat}\nlon: {lon}"}
     ))
 
-    st.table(chart_data)
+    st.table(chart_data.head(20))
 
     st.divider()  # 👈 Draws a horizontal rule
     st.header('VDU RIU RRH Planning')
@@ -212,7 +212,7 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
     st.header('Fiber optical line distance analysis')
     # uploaded_file = st.file_uploader("Choose input CSV files to process",type= "csv",accept_multiple_files=True,key = "first")
 
-    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Tel Aviv", "Osaka", "Istanbul","Mainz"]
+    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Tel_Aviv", "Jerusalem", "Istanbul","Haifa"]
     option = st.selectbox('Please Select The City to view fiber optical lines', city_list)
     dir = "C:/Users/barba/Downloads/data/fiber/"
 
@@ -580,10 +580,10 @@ if selected == "Database Management":
         import pandas as pd
         uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
         cluster = MongoClient(uri, server_api=ServerApi('1'))
-        db = cluster["Fiber"]
+        db = cluster["Sites"]
 
         df_tokyo = pd.read_csv(uploaded_file, index_col=False)
-        df_tokyo["_id"] = df_tokyo["Name"]
+        df_tokyo["_id"] = df_tokyo["Site Name"]
         df_tokyo.reset_index(inplace=True)
 
         df_tokyo_dict = df_tokyo.to_dict("records")
@@ -640,7 +640,7 @@ if selected == "Performance Analysis":
     st.header('Map and table views')
 
     db_name_read = "Sites" # st.text_input('dB name to read')
-    city_list =["Dusseldorf","Essen","Frankfurt","Cologne","Tokyo","Tel Aviv","Osaka","Istanbul"]
+    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Tel_Aviv", "Jerusalem", "Istanbul","Haifa" ]
     option_1 = st.selectbox('Please Select The City', city_list,key=1)
     collection_name = option_1 # st.text_input('Collection name to read')
     # if st.button('Read Collection'):
@@ -743,9 +743,9 @@ if selected == "Toolkit":
     import pydeck as pdk
 
     st.title('Sites')
-    center_lat = 52.483154
-    center_lon = -1.894789
-    total_numbers = 10000
+    center_lat = 32.079128
+    center_lon = 34.788474
+    total_numbers = 5000
 
     df_tokyo_gen = pd.DataFrame(np.random.randn(total_numbers, 2) / [20, 20] + [center_lat,center_lon ], columns=['lat', 'lon'])
 
@@ -804,7 +804,7 @@ if selected == "RAN Monitoring":
     st.header('Site view')
 
     db_name_read = "Sites" # st.text_input('dB name to read')
-    city_list =["Dusseldorf","Essen","Frankfurt","Cologne","Tokyo","Tel Aviv","Osaka","Istanbul"]
+    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Tel_Aviv", "Jerusalem", "Istanbul","Haifa"]
     option = st.selectbox('Please Select The City', city_list)
     collection_name = option # st.text_input('Collection name to read')
     # if st.button('Read Collection'):
