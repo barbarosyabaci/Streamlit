@@ -291,7 +291,7 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
     cluster = MongoClient(uri, server_api=ServerApi('1'))
     db = cluster[db_name_read]
     all_data_from_db = db[collection_name].find({})
-    df_tokyo_mongodb = pd.DataFrame(list(all_data_from_db)).head(10)
+    df_tokyo_mongodb = pd.DataFrame(list(all_data_from_db)).head(100)
 
     # Uploaded sites list
 
