@@ -718,24 +718,33 @@ if selected == "Performance Analysis":
 
 
 
-    st.divider()  # 👈 Draws a horizontal rule
-
-    st.header('Site Statistics')
-
-    option = st.selectbox('Select Site to see statistics and information', site_list,key = "second")
 
     st.divider()  # 👈 Draws a horizontal rule
 
-    st.header('Region Statistics')
+    st.header('Region Statistics and Performance')
     region_list = ["Region_1","Region_2","Region_3","Region_4","Region_5","Region_6","REgion_7","Region_8"]
 
     option_2 = st.selectbox('Select Regions to see statistics and information', region_list,key = "third")
 
     st.divider()  # 👈 Draws a horizontal rule
 
-    st.header('Site Configuration Statistics')
+    st.header('Network Configuration')
 
     uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True)
+
+    st.divider()  # 👈 Draws a horizontal rule
+
+    st.header('RAN Analytics')
+
+    option = st.selectbox('Select Site to see statistics and information', site_list,key = "4")
+
+    st.divider()  # 👈 Draws a horizontal rule
+    st.header('Site Statistics')
+
+    option = st.selectbox('Select Site to see statistics and information', site_list, key="5")
+
+    st.divider()  # 👈 Draws a horizontal rule
+
 
 if selected == "Toolkit":
     import pandas as pd
