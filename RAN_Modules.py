@@ -5,10 +5,11 @@ with st.sidebar:
     selected = option_menu("Planning & Optimization Modules",[
         "Geolocation Based RAN Planning",
         "Geolocation Based RAN Infrastructure Planning",
+        "Radio Frequency (RF) Planning and Optimization",
         "Database Migration",
         "Machine Learning / AI use case design optimization projects",
-        "Performance Analysis",
-        "RAN Monitoring",
+        "Performance Monitoring and Optimization",
+        "Reporting and Analytics",
         "Database Management",
         "Toolkit",
         ], menu_icon="cast", default_index=0)
@@ -629,8 +630,7 @@ if selected == "Database Management":
         df = pd.DataFrame(list(all_data_from_db))
         st.write(df)
 
-if selected == "Performance Analysis":
-
+if selected == "Performance Monitoring and Optimization":
     import pandas as pd
     import numpy as np
     import pydeck as pdk
@@ -758,16 +758,83 @@ if selected == "Toolkit":
     import pydeck as pdk
 
     st.title('Sites')
-    center_lat = 32.079128
-    center_lon = 34.788474
-    total_numbers = 5000
+    center_lat = 51.512696
+    center_lon = -0.122940
+    total_numbers = 10000
 
     df_tokyo_gen = pd.DataFrame(np.random.randn(total_numbers, 2) / [20, 20] + [center_lat,center_lon ], columns=['lat', 'lon'])
 
-    def convert_df(df):
-        return df.to_csv().encode('utf-8')
 
-    csv = convert_df(df_tokyo_gen)
+    def point_check_P(p1, gdf_reg):
+        # print(gdf_reg['geometry'])
+        # iterating polygons inside the multipolygon
+        a = 'no'
+        for k in gdf_reg['geometry']:
+            # print(k)
+            if p1.within(k):
+                a = 'urban'
+                break
+            else:
+                a = 'rural'
+        return a
+
+    def df_planet_lte_cells_rural_urban_class(df_planet_lte_cells, tab_file):
+        import fiona
+        import geopandas as gpd
+        from shapely.geometry import Point, Polygon
+        import pandas as pd
+        import webbrowser
+        import numpy as np
+        import os
+        import time
+
+        df_tab_file = gpd.read_file(tab_file, driver="MapInfo File")
+
+        start = time.time()
+        local_time = time.ctime(start)
+        print("Local time:", local_time)
+
+        gdf_reg = df_tab_file.explode()
+        df_planet_lte_cells['Urban_Rural'] = df_planet_lte_cells.apply(lambda x: point_check_P((Point(x['Longitude'], x['Latitude'])), gdf_reg), axis=1)
+
+        # df_planet_lte_cells.loc[df_planet_lte_cells["Urban_Rural"] == "urban", "Propagation Model"] = df_planet_lte_cells["Propagation Model"].str[:-4] + "_urban.pmf"
+        # df_planet_lte_cells.loc[df_planet_lte_cells["Urban_Rural"] == "rural", "Propagation Model"] = df_planet_lte_cells["Propagation Model"].str[:-4] + "_rural.pmf"
+
+        # df_planet_lte_cells.loc[df_planet_lte_cells["Urban_Rural"] == "urban", "Distance (km)"] = 3
+        # df_planet_lte_cells.loc[df_planet_lte_cells["Urban_Rural"] == "rural", "Distance (km)"] = 10
+        # df_planet_lte_cells["Urban_Rural"]
+        df_planet_lte_cells = df_planet_lte_cells.loc[df_planet_lte_cells["Urban_Rural"] == "urban"]
+        # df.loc[df['column_name'] != some_value]
+
+        end = time.time()
+        print(end - start)
+
+        return df_planet_lte_cells
+
+    tab_file = "London.tab"
+
+    df_tokyo_gen["Longitude"] = df_tokyo_gen["lon"]
+    df_tokyo_gen["Latitude"] = df_tokyo_gen["lat"]
+
+    df_tokyo_gen = df_planet_lte_cells_rural_urban_class(df_tokyo_gen, tab_file)
+
+    def convert_df(df):
+        return df.to_csv(index=None).encode('utf-8')
+
+
+    column_names = ["Site Name","lat","lon","Site azimths","Height","Power","labels","5G_Bands","4G_Bands"]
+    result_df = pd.DataFrame(columns=column_names)
+    result_df["lat"] = df_tokyo_gen["lat"]
+    result_df["lon"] = df_tokyo_gen["lon"]
+    result_df["Site azimths"] = "0,120,240"
+    result_df["Height"] = 25
+    result_df["Power"] = 45
+    result_df["5G_Bands"] = "XXXXX"
+    result_df["4G_Bands"] = "YYYYY"
+    result_df["Site Name"] = range(1, len(result_df) + 1)
+    result_df['Site Name'] = result_df['Site Name'].apply(lambda x: 'LON_' + str(x))
+    result_df["labels"] = result_df['Site Name']
+    csv = convert_df(result_df)
     st.download_button(label="Download Result File", data=csv, file_name='Total_output.csv', mime='text/csv', )
 
     # chart_data = df_tokyo[["lat","lon"]]
@@ -808,7 +875,7 @@ if selected == "Toolkit":
         ],
     ))
 
-if selected == "RAN Monitoring":
+if selected == "Reporting and Analytics":
     import pandas as pd
     import numpy as np
     from pymongo.mongo_client import MongoClient
@@ -911,4 +978,106 @@ if selected == "RAN Monitoring":
 
     st.header('Site Configuration Statistics')
 
+if selected == "Radio Frequency (RF) Planning and Optimization":
+    import pandas as pd
+    import numpy as np
+    from pymongo.mongo_client import MongoClient
+    from pymongo.server_api import ServerApi
+    import pydeck as pdk
+
+    st.title('Radio Frequency (RF) Planning and Optimization')
+    st.header('Site view')
+
+    db_name_read = "Sites" # st.text_input('dB name to read')
+    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Tel_Aviv", "Jerusalem", "Istanbul","Haifa"]
+    option = st.selectbox('Please Select The City', city_list,key = 25)
+    collection_name = option # st.text_input('Collection name to read')
+    # if st.button('Read Collection'):
+
+    uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+    cluster = MongoClient(uri, server_api=ServerApi('1'))
+    db = cluster[db_name_read]
+    all_data_from_db = db[collection_name].find({})
+    df_tokyo_mongodb = pd.DataFrame(list(all_data_from_db))
+    # st.write(df_tokyo_mongodb)
+
+    zoom_level = 15
+    # symrad = 30
+
+    site_list = list(df_tokyo_mongodb["Site Name"])#
+    # site_list.insert(0, "     ")
+    option = st.selectbox('Select Site to see statistics and information', site_list, key = 26 )
+
+    max_lat = df_tokyo_mongodb["lat"].max()
+    min_lat = df_tokyo_mongodb["lat"].min()
+    max_lon = df_tokyo_mongodb["lon"].max()
+    min_lon = df_tokyo_mongodb["lon"].min()
+
+    selected = df_tokyo_mongodb.loc[df_tokyo_mongodb['Site Name'] == option]
+    lat = selected["lat"].iloc[0]
+    lon = selected["lon"].iloc[0]
+    del selected["labels"]
+    st.table(selected)
+
+    if st.button('View Entire Layer'):
+        zoom_level = 11
+        lat = (max_lat + min_lat)/2
+        lon = (max_lon + min_lon)/2
+    else:
+        pass
+
+    # chart_data = df_tokyo_mongodb[["lat","lon"]]
+
+
+    st.pydeck_chart(pdk.Deck(
+        map_style=None,
+        initial_view_state=pdk.ViewState(
+            latitude= lat,# (max_lat + min_lat)/2,
+            longitude=lon, # (max_lon + min_lon)/2,
+            zoom=zoom_level,
+            pitch=0,
+        ),
+        layers=[
+            pdk.Layer(
+                'ScatterplotLayer',
+                data=df_tokyo_mongodb,
+                get_position='[lon, lat]',
+                get_color='[200, 30, 0, 160]',
+                pickable=True,
+                tooltip=True, radiusScale=5,
+                radiusMinPixels=5,
+                radiusMaxPixels=5,
+                # get_radius=50,
+            ),
+            pdk.Layer(type="TextLayer",
+                data=df_tokyo_mongodb,
+                pickable=False,
+                get_position=["lon", "lat"],
+                get_text="labels",
+                get_size=12,
+                get_color=[0, 0, 0],
+                get_angle=0, # Note that string constants in pydeck are explicitly passed as strings
+                # This distinguishes them from columns in a data set
+                getTextAnchor='"middle"',
+                get_alignment_baseline='"bottom"'
+            ),
+        ],
+        tooltip={"text": "Site: {labels}\n"
+                         "Power: {Power}\n"
+                         "Height: {Height}\n"
+                         "Azimuths: {Site azimths}\n"
+                         "5G Bands: {5G_Bands}\n"
+                         "4G Bands: {4G_Bands}"
+                        }
+    ))
+
+    st.divider()  # 👈 Draws a horizontal rule
+
+    st.header('Site Statistics')
+
+    option_2 = st.selectbox('Select Site to see statistics and information', site_list,key = 27)
+
+    st.divider()  # 👈 Draws a horizontal rule
+
+    st.header('Site Configuration Statistics')
 
