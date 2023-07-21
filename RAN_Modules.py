@@ -18,7 +18,7 @@ if selected == "Geolocation Based RAN Planning":
     import GC_functions as gc
     import numpy as np
 
-    st.title('Virtual RAN Planning Tools')
+    st.title('Virtual RAN Planning')
     st.header('Virtual RAN Group Center Virtual Control Unit Planning from Database')
     # st.title('A title with _italics_ :blue[colors] and emojis :sunglasses:')
     # st.header('This is a header')
@@ -220,96 +220,9 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
     File_Name_2 = option[:3] + "_fiber_2.tab"
     File_Name_3 = option[:3] + "_fiber_3.tab"
     # File_Name = "C:/Users/barba/Downloads/data/fiber/Mainz.tab"
-
-    df_tab_file = gpd.read_file(File_Name, driver="MapInfo File")
-    df_tab_file_2 = gpd.read_file(File_Name_2, driver="MapInfo File")
-    df_tab_file_3 = gpd.read_file(File_Name_3, driver="MapInfo File")
-
-    # Reading from online db
-
-
-    # End - reading from online dB
-
-    tab_files = [df_tab_file,df_tab_file_2,df_tab_file_3]
-
     def hex_to_rgb(h):
         h = h.lstrip("#")
         return tuple(int(h[i: i + 2], 16) for i in (0, 2, 4))
-
-    # st.write(df)
-
-    def convert_df(df):
-        # IMPORTANT: Cache the conversion to prevent computation on every rerun
-        return df.to_csv().encode('utf-8')
-
-
-    df_news =[0,1,2]
-    # tab file start
-    j = 0
-    color_list = ["#ed1c24","#0246ff","#ffcc33"]
-    for df_tab_file in tab_files:
-        # st.write(df_tab_file)
-        df_tab_file['path'] = df_tab_file.apply(lambda x: [y for y in x['geometry'].coords], axis=1)
-        df_tab_file.to_dict('records')
-
-        for i in range(len(df_tab_file)):
-            tuples = df_tab_file['path'][i]
-            lists = [list(t) for t in tuples]
-            # lists = [[t[1], t[0]] for t in tuples]
-            df_tab_file['path'][i] = lists
-
-        df_tab_file.rename(columns={"Name": "name"}, inplace=True)
-
-        df_new = pd.DataFrame(columns=['name', 'color', 'path'])
-        df_new["name"] = df_tab_file["name"]
-        df_new["color"] = color_list[j]
-        df_new["path"] = df_tab_file["path"]
-
-        df_new["color"] = df_new["color"].apply(hex_to_rgb)
-        lon_cen_1 = df_new["path"][0][0][0]
-        lat_cen_1 = df_new["path"][0][0][1]
-        df_news[j] = df_new
-        j = j +1
-
-    view_state = pdk.ViewState(latitude= lat_cen_1, longitude=lon_cen_1, zoom=10)
-
-    df_news_0 = df_news[0]
-    df_news_1 = df_news[1]
-    df_news_2 = df_news[2]
-
-
-    # Reading sites from database to plan
-
-    from pymongo.mongo_client import MongoClient
-    from pymongo.server_api import ServerApi
-
-    db_name_read = "Sites"
-    # option = st.selectbox('Please Select The City', city_list)
-    collection_name = option  # st.text_input('Collection name to read')
-
-    uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
-    cluster = MongoClient(uri, server_api=ServerApi('1'))
-    db = cluster[db_name_read]
-    all_data_from_db = db[collection_name].find({})
-    df_tokyo_mongodb = pd.DataFrame(list(all_data_from_db)).head(30)
-
-    # Uploaded sites list
-
-    uploaded_file = st.file_uploader("Choose input CSV files to process",type= "csv",accept_multiple_files=True)
-
-    if st.button('Process uploaded files'):
-        df_tokyo_mongodb = pd.read_csv(uploaded_file, index_col=0)
-
-    # Calculating fiber distances
-
-    df_result = pd.DataFrame(columns=["Point", "Min_Distance"])
-    df_points = df_tokyo_mongodb
-    points = []
-    min_results_own = []
-    min_results_V1 = []
-    min_results_V2 = []
-
-
     def path_line_dist(df_tab_file, point):
         from geopy.distance import geodesic
         import geopandas as gpd
@@ -339,78 +252,159 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
                 line_end = (parts[i + 1][1], parts[i + 1][0])
                 shortest_dist.append(point_line_dist(line_start, line_end, point)[0])
         return min(shortest_dist)  # for i in range(len(line_parts[0])-1):  #     line_start = (line_parts[0][i][1] , line_parts[0][i][0])  #     line_end = (line_parts[0][i+1][1] , line_parts[0][i+1][0])  #     # print(point_line_dist(line_start, line_end, point)[0][1])  #     # shortest_dist.append(point_line_dist(line_start, line_end, point)[0][0])
+    def convert_df(df):
+        # IMPORTANT: Cache the conversion to prevent computation on every rerun
+        return df.to_csv().encode('utf-8')
+    if st.button("Process from online database"):
+        df_tab_file = gpd.read_file(File_Name, driver="MapInfo File")
+        df_tab_file_2 = gpd.read_file(File_Name_2, driver="MapInfo File")
+        df_tab_file_3 = gpd.read_file(File_Name_3, driver="MapInfo File")
+        tab_files = [df_tab_file, df_tab_file_2, df_tab_file_3]
+        # Reading from online db
 
 
-    for i in range(len(df_points)):
-        point = (df_points.iloc[i].lat, df_points.iloc[i].lon)
-        min_distance_1 = path_line_dist(df_tab_file,point)
-        min_distance_2 = path_line_dist(df_tab_file_2,point)
-        min_distance_3 = path_line_dist(df_tab_file_3,point)
-        points.append(point)
-        min_results_own.append(min_distance_1[0])
-        min_results_V1.append(min_distance_2[0])
-        min_results_V2.append(min_distance_3[0])
-
-    df_result["Point"] = points
-    df_result["Site Name"] = df_tokyo_mongodb["Site Name"]
-    df_result["Min_Distance_Own"] = min_results_own
-    df_result["Min_Distance_V1"] = min_results_V1
-    df_result["Min_Distance_V2"] = min_results_V2
-    # df_result["Min_Distance"] = df_result.apply(lambda row: min(row["Min_Distance_Own"],row["Min_Distance_V1"],row["Min_Distance_V2"]), axis=1)
-    # df['min_value'] = df.apply(lambda row: min(row['col1'], row['col2'], row['col3']), axis=1)
-    df_result["Min_Distance"]  = df_result[["Min_Distance_Own", "Min_Distance_V1", "Min_Distance_V2"]].min(axis=1)
-    csv = convert_df(df_result)
-    st.download_button(label="Download Result File", data=csv, file_name='Result_output.csv', mime='text/csv', )
+        # End - reading from online dB
 
 
-    # Displaying maps
+        df_news =[0,1,2]
+        # tab file start
+        j = 0
+        color_list = ["#ed1c24","#0246ff","#ffcc33"]
+        for df_tab_file in tab_files:
+            # st.write(df_tab_file)
+            df_tab_file['path'] = df_tab_file.apply(lambda x: [y for y in x['geometry'].coords], axis=1)
+            df_tab_file.to_dict('records')
 
-    st.pydeck_chart(pdk.Deck(
-        map_style=None,
-        initial_view_state= view_state,
-        layers=[
-            pdk.Layer(
-                type="PathLayer",
-                data=df_news_0,
-                pickable=True,
-                get_color="color",
-                width_scale=5,
-                width_min_pixels=2,
-                get_path="path",
-                get_width=2
-            ),
-            pdk.Layer(type="PathLayer",
-                data=df_news_1,
-                pickable=True,
-                get_color="color",
-                width_scale=5,
-                width_min_pixels=2,
-                get_path="path",
-                get_width=2),
-            pdk.Layer(type="PathLayer",
-                data=df_news_2,
-                pickable=True,
-                get_color="color",
-                width_scale=5,
-                width_min_pixels=2,
-                get_path="path",
-                get_width=2),
-            pdk.Layer('ScatterplotLayer',
-                data=df_tokyo_mongodb,
-                get_position='[lon, lat]',
-                get_color='[200, 30, 0, 160]',
-                pickable=True,
-                tooltip=True,
-                radiusScale=2,
-                radiusMinPixels=2,
-                radiusMaxPixels=2, # get_radius=50,
-    ),
-        ],
-        # tooltip={"Name: {name}"}
-        tooltip = {"text": "Site Name: {Site Name}"}
-    ))
+            for i in range(len(df_tab_file)):
+                tuples = df_tab_file['path'][i]
+                lists = [list(t) for t in tuples]
+                # lists = [[t[1], t[0]] for t in tuples]
+                df_tab_file['path'][i] = lists
 
-    st.dataframe(df_result)
+            df_tab_file.rename(columns={"Name": "name"}, inplace=True)
+
+            df_new = pd.DataFrame(columns=['name', 'color', 'path'])
+            df_new["name"] = df_tab_file["name"]
+            df_new["color"] = color_list[j]
+            df_new["path"] = df_tab_file["path"]
+
+            df_new["color"] = df_new["color"].apply(hex_to_rgb)
+            lon_cen_1 = df_new["path"][0][0][0]
+            lat_cen_1 = df_new["path"][0][0][1]
+            df_news[j] = df_new
+            j = j +1
+
+        view_state = pdk.ViewState(latitude= lat_cen_1, longitude=lon_cen_1, zoom=10)
+
+        df_news_0 = df_news[0]
+        df_news_1 = df_news[1]
+        df_news_2 = df_news[2]
+
+
+    # Reading sites from database to plan
+
+        from pymongo.mongo_client import MongoClient
+        from pymongo.server_api import ServerApi
+
+        db_name_read = "Sites"
+    # option = st.selectbox('Please Select The City', city_list)
+        collection_name = option  # st.text_input('Collection name to read')
+
+        uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+        cluster = MongoClient(uri, server_api=ServerApi('1'))
+        db = cluster[db_name_read]
+        all_data_from_db = db[collection_name].find({})
+        df_tokyo_mongodb = pd.DataFrame(list(all_data_from_db)).head(30)
+
+    # Uploaded sites list
+
+        uploaded_file = st.file_uploader("Choose input CSV files to process",type= "csv",accept_multiple_files=True)
+
+
+
+    # Calculating fiber distances
+
+        df_result = pd.DataFrame(columns=["Point", "Min_Distance"])
+        df_points = df_tokyo_mongodb
+        points = []
+        min_results_own = []
+        min_results_V1 = []
+        min_results_V2 = []
+
+
+        for i in range(len(df_points)):
+            point = (df_points.iloc[i].lat, df_points.iloc[i].lon)
+            min_distance_1 = path_line_dist(df_tab_file,point)
+            min_distance_2 = path_line_dist(df_tab_file_2,point)
+            min_distance_3 = path_line_dist(df_tab_file_3,point)
+            points.append(point)
+            min_results_own.append(min_distance_1[0])
+            min_results_V1.append(min_distance_2[0])
+            min_results_V2.append(min_distance_3[0])
+
+        df_result["Point"] = points
+        df_result["Site Name"] = df_tokyo_mongodb["Site Name"]
+        df_result["Min_Distance_Own"] = min_results_own
+        df_result["Min_Distance_V1"] = min_results_V1
+        df_result["Min_Distance_V2"] = min_results_V2
+        # df_result["Min_Distance"] = df_result.apply(lambda row: min(row["Min_Distance_Own"],row["Min_Distance_V1"],row["Min_Distance_V2"]), axis=1)
+        # df['min_value'] = df.apply(lambda row: min(row['col1'], row['col2'], row['col3']), axis=1)
+        df_result["Min_Distance"]  = df_result[["Min_Distance_Own", "Min_Distance_V1", "Min_Distance_V2"]].min(axis=1)
+        csv = convert_df(df_result)
+
+        st.download_button(label="Download Result File", data=csv, file_name='Result_output.csv', mime='text/csv', )
+
+        # Displaying maps
+
+        st.pydeck_chart(pdk.Deck(
+            map_style=None,
+            initial_view_state= view_state,
+            layers=[
+                pdk.Layer(
+                    type="PathLayer",
+                    data=df_news_0,
+                    pickable=True,
+                    get_color="color",
+                    width_scale=5,
+                    width_min_pixels=2,
+                    get_path="path",
+                    get_width=2
+                ),
+                pdk.Layer(type="PathLayer",
+                    data=df_news_1,
+                    pickable=True,
+                    get_color="color",
+                    width_scale=5,
+                    width_min_pixels=2,
+                    get_path="path",
+                    get_width=2),
+                pdk.Layer(type="PathLayer",
+                    data=df_news_2,
+                    pickable=True,
+                    get_color="color",
+                    width_scale=5,
+                    width_min_pixels=2,
+                    get_path="path",
+                    get_width=2),
+                pdk.Layer('ScatterplotLayer',
+                    data=df_tokyo_mongodb,
+                    get_position='[lon, lat]',
+                    get_color='[200, 30, 0, 160]',
+                    pickable=True,
+                    tooltip=True,
+                    radiusScale=2,
+                    radiusMinPixels=2,
+                    radiusMaxPixels=2, # get_radius=50,
+        ),
+            ],
+            # tooltip={"Name: {name}"}
+            tooltip = {"text": "Site Name: {Site Name}"}
+        ))
+
+        st.dataframe(df_result)
+
+    if st.button('Process uploaded files'):
+        df_tokyo_mongodb = pd.read_csv(uploaded_file, index_col=0)
 
     st.divider()  # 👈 Draws a horizontal rule
     st.header('Site candidate Fiber cost opex/capex analysis')
@@ -426,7 +420,7 @@ if selected == "Database Migration":
     import numpy as np
     import Data_migration_functions as cpf
 
-    st.title('Data Migration Tools From Atoll to Planet Microservices')
+    st.title('Data Migration From Atoll to Planet Microservices')
     st.divider()  # 👈 Draws a horizontal rule
     st.header('Convert Atoll Files to Planet Microservices Format')
 
@@ -521,7 +515,7 @@ if selected == "Database Management":
     from pymongo.server_api import ServerApi
     import pandas as pd
 
-    st.title('Database Management Tools')
+    st.title('Database Management')
     st.header('Database Connection')
 
     if st.button('Connect dB'):
@@ -643,7 +637,7 @@ if selected == "Performance Analysis":
     from pymongo.mongo_client import MongoClient
     from pymongo.server_api import ServerApi
 
-    st.title('Site information tools')
+    st.title('Site information')
     st.header('Map and table views')
 
     db_name_read = "Sites" # st.text_input('dB name to read')
@@ -821,7 +815,7 @@ if selected == "RAN Monitoring":
     from pymongo.server_api import ServerApi
     import pydeck as pdk
 
-    st.title('RAN information tools')
+    st.title('RAN information')
     st.header('Site view')
 
     db_name_read = "Sites" # st.text_input('dB name to read')
