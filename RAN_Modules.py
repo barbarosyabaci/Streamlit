@@ -497,7 +497,7 @@ if selected == "Machine Learning / AI use case design optimization projects":
         st.divider()  # 👈 Draws a horizontal rule
         st.header('KPI Anomaly Heat-Map')
         uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="1")
-        picture = Image.open(r'C:\Users\barba\PycharmProjects\pythonProject\2023_works\Picture1.png')
+        picture = Image.open(r'Picture1.png')
         st.image(picture,use_column_width=True)
         st.divider()  # 👈 Draws a horizontal rule
         st.header('Silent Issue detection')
@@ -508,7 +508,7 @@ if selected == "Machine Learning / AI use case design optimization projects":
         st.divider()  # 👈 Draws a horizontal rule
         st.header('Energy Efficiency Management')
         uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="4")
-        picture2 = Image.open(r'C:\Users\barba\PycharmProjects\pythonProject\2023_works\Picture2.png')
+        picture2 = Image.open(r'Picture2.png')
         st.image(picture2,use_column_width=True)
 
 if selected == "Database Management":
