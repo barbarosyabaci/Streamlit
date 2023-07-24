@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 with st.sidebar:
-    selected = option_menu("Planning & Optimization Modules",[
+    selected = option_menu("RAN Modules",[
         "Geolocation Based RAN Planning",
         "Geolocation Based RAN Infrastructure Planning",
         "Radio Frequency (RF) Planning and Optimization",
@@ -12,6 +12,7 @@ with st.sidebar:
         "Reporting and Analytics",
         "Database Management",
         "Toolkit",
+        # "path layer"
         ], menu_icon="cast", default_index=0)
 
 if selected == "Geolocation Based RAN Planning":
@@ -29,7 +30,7 @@ if selected == "Geolocation Based RAN Planning":
     gc_df = []
     site_df =[]
 
-    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo","Osaka","London","Manchester","Birmingham","Tel_Aviv","Jerusalem", "Istanbul","Haifa"]
+    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo","Osaka","London","Manchester","Birmingham","Paris","Tel_Aviv","Jerusalem", "Istanbul","Haifa"]
     option = st.selectbox('Please Select The City', city_list)
     if st.button("Process from online database"):
         import pandas as pd
@@ -758,12 +759,10 @@ if selected == "Toolkit":
     import pydeck as pdk
 
     st.title('Sites')
-    center_lat = 51.512696
-    center_lon = -0.122940
+    center_lat, center_lon = 52.4928,-1.9167
     total_numbers = 10000
 
     df_tokyo_gen = pd.DataFrame(np.random.randn(total_numbers, 2) / [20, 20] + [center_lat,center_lon ], columns=['lat', 'lon'])
-
 
     def point_check_P(p1, gdf_reg):
         # print(gdf_reg['geometry'])
@@ -778,7 +777,7 @@ if selected == "Toolkit":
                 a = 'rural'
         return a
 
-    def df_planet_lte_cells_rural_urban_class(df_planet_lte_cells, tab_file):
+    def df_planet_lte_cells_rural_urban_class(df_planet_lte_cells, df_tab_file):
         import fiona
         import geopandas as gpd
         from shapely.geometry import Point, Polygon
@@ -788,7 +787,7 @@ if selected == "Toolkit":
         import os
         import time
 
-        df_tab_file = gpd.read_file(tab_file, driver="MapInfo File")
+        # df_tab_file = gpd.read_file(tab_file, driver="MapInfo File")
 
         start = time.time()
         local_time = time.ctime(start)
@@ -811,16 +810,23 @@ if selected == "Toolkit":
 
         return df_planet_lte_cells
 
-    tab_file = "London.tab"
+    tab_file = "C:/Users/barba/Downloads/data/City_Borders/GBR_adm2.tab"
+    import geopandas as gpd
+    df_tab_file_1 = gpd.read_file(tab_file, driver="MapInfo File")
+    # st.write(df_tab_file_1.columns)
+    # st.write(df_tab_file["NAME_2"])
+    # df_tab_file = df_tab_file_1[df_tab_file_1["NAME_2"].isin(["London","Islington","Camden","Hackney","Southwark","Westminster","Tower Hamlets","Lambeth"])]
+    df_tab_file = df_tab_file_1[df_tab_file_1["NAME_2"].isin(["West Midlands"])]
+
+    st.write(df_tab_file)
 
     df_tokyo_gen["Longitude"] = df_tokyo_gen["lon"]
     df_tokyo_gen["Latitude"] = df_tokyo_gen["lat"]
 
-    df_tokyo_gen = df_planet_lte_cells_rural_urban_class(df_tokyo_gen, tab_file)
+    df_tokyo_gen = df_planet_lte_cells_rural_urban_class(df_tokyo_gen, df_tab_file)
 
     def convert_df(df):
         return df.to_csv(index=None).encode('utf-8')
-
 
     column_names = ["Site Name","lat","lon","Site azimths","Height","Power","labels","5G_Bands","4G_Bands"]
     result_df = pd.DataFrame(columns=column_names)
@@ -832,7 +838,7 @@ if selected == "Toolkit":
     result_df["5G_Bands"] = "XXXXX"
     result_df["4G_Bands"] = "YYYYY"
     result_df["Site Name"] = range(1, len(result_df) + 1)
-    result_df['Site Name'] = result_df['Site Name'].apply(lambda x: 'LON_' + str(x))
+    result_df['Site Name'] = result_df['Site Name'].apply(lambda x: 'BIR_' + str(x))
     result_df["labels"] = result_df['Site Name']
     csv = convert_df(result_df)
     st.download_button(label="Download Result File", data=csv, file_name='Total_output.csv', mime='text/csv', )
@@ -847,8 +853,8 @@ if selected == "Toolkit":
     st.pydeck_chart(pdk.Deck(
         map_style=None,
         initial_view_state=pdk.ViewState(
-            latitude=(max_lat + min_lat)/2,
-            longitude=(max_lon + min_lon)/2,
+            latitude= (max_lat + min_lat)/2,
+            longitude= (max_lon + min_lon)/2,
             zoom=11,
             pitch=0,
         ),
@@ -860,7 +866,7 @@ if selected == "Toolkit":
                 get_color='[200, 30, 0, 160]',
                 get_radius=50,
             ),
-            pdk.Layer(type="TextLayer",
+                pdk.Layer(type="TextLayer",
                 data=df_tokyo_gen,
                 pickable=False,
                 get_position=["lon", "lat"],
@@ -872,6 +878,14 @@ if selected == "Toolkit":
                 getTextAnchor='"middle"',
                 get_alignment_baseline='"bottom"'
             ),
+                pdk.Layer(
+                "GeoJsonLayer",
+                data=df_tab_file,
+                get_fill_color=[255, 0, 0, 100],  # Fill color for polygons
+                get_line_color=[0, 0, 0],  # Line color for boundaries
+                pickable=True,  # Allow click interactions on the map features
+            ),
+
         ],
     ))
 
@@ -1080,4 +1094,84 @@ if selected == "Radio Frequency (RF) Planning and Optimization":
     st.divider()  # 👈 Draws a horizontal rule
 
     st.header('Site Configuration Statistics')
+
+if selected == "path layer":
+    import pandas as pd
+    import numpy as np
+    import pydeck as pdk
+
+    def hex_to_rgb(h):
+        h = h.lstrip("#")
+        return tuple(int(h[i: i + 2], 16) for i in (0, 2, 4))
+
+    def create_arc(center, radius, ang, beam):
+        import math
+        start_angle = ang - (beam / 2)
+        end_angle = ang + (beam / 2)
+        num_points = 50
+        arc_points = []
+        for i in range(num_points + 1):
+            angle = math.radians(start_angle + (i * (end_angle - start_angle) / num_points))
+            x = center[0] + (radius * math.cos(angle))
+            y = center[1] + (radius * math.sin(angle))
+            arc_points.append([x, y])
+        return arc_points
+
+
+
+    # st.write(arc_points)
+
+
+    view_state = pdk.ViewState(latitude=51.24693404, longitude=6.73963547, zoom=10)
+
+    path_1 = [[-122.3535851, 37.9360513], [-122.3179784, 37.9249513]]
+
+    paths = pd.DataFrame(columns=['id', 'path'])
+    points = [
+        [6.73963547,51.24693404],
+        [6.83360478,51.17002955],
+        [6.78363881,51.24151427],
+        [6.77632707,51.21726814],
+        [6.76203622,51.11475693],
+        [6.81237589,51.27697827]
+    ]
+
+    for i in range(5):
+        arc_points = create_arc(points[i], 0.01, 45, 180)
+        paths = paths.append({'id': i, 'path':arc_points}, ignore_index=True)
+
+    print(paths)
+
+    layer = pdk.Layer(
+        type="PathLayer",
+        data= paths,
+        pickable=True,
+        get_color=[0, 0, 0],#"color",
+        width_scale=2,
+        width_min_pixels=2,
+        get_path= "path",
+        get_width=2, ),\
+        pdk.Layer(
+        type = "PolygonLayer",
+        data= paths,
+        id="geojson",
+        opacity=0.8, stroked=False, get_polygon="path",
+        filled=True,
+        extruded=True,
+        wireframe=True,
+        get_fill_color=[255, 255, 255],
+        get_line_color=[255, 255, 255], auto_highlight=True, pickable=True, )
+
+    st.pydeck_chart(
+        pdk.Deck(
+        map_style=None,
+        initial_view_state=view_state,
+        layers=[ layer],
+        ))
+
+
+
+
+
+
 
