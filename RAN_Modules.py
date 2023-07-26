@@ -534,7 +534,8 @@ if selected == "Database Management":
 
     # cl_name = st.text_input('Cluster name:')
     if st.button('List Databases in cluster'):
-        uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+        # uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+        uri = "0"
         cluster = MongoClient(uri, server_api=ServerApi('1'))
         try:
             cluster.admin.command('ping')
