@@ -2,6 +2,12 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 with st.sidebar:
+    st.write("This is a demo software program with some demo modules. "
+             "The purpose of the demo is to show the data processing capability of our applications.  \n"
+             "  \n"
+             "If you need any tailor made software with similar data processing fetaures please contact us.  \n"
+             "  \n"
+             "Total site/cell database in this demo exceeds 100.000 sites and all databases is on cloud(MongodB) and all processing done in cloud virtual machines")
     selected = option_menu("RAN Modules",[
         "Geolocation Based RAN Planning",
         "Geolocation Based RAN Infrastructure Planning",
@@ -22,6 +28,16 @@ if selected == "Geolocation Based RAN Planning":
 
     st.title('Virtual RAN Planning')
     st.header('Virtual RAN Group Center Virtual Control Unit Planning from Database')
+
+    st.write("This module is a demo for VCU group center planning algorithm. "
+             "Algoritm plans 1000 of site for each city by group of 4 by using K nearest negihbour algorithm.  \n"
+             "  \n"
+             "The number of planned sites are limitless and the group size can be adjustable. "
+             "Algorithm applies plan many iterations to find an optimum solution to planning problem.  \n"
+             "  \n"
+             "Press the button to process data from online database or you can upload your files if you have the format  \n"
+             "You can view, zoom and download the results.")
+
     # st.title('A title with _italics_ :blue[colors] and emojis :sunglasses:')
     # st.header('This is a header')
     # st.header('A header with _italics_ :blue[colors] and emojis :sunglasses:')
@@ -73,7 +89,7 @@ if selected == "Geolocation Based RAN Planning":
         # st.write(gc_df)
 
     st.divider()
-    st.header('Virtual RAN Group Center Virtual Control Unit Planning from csv file')
+    #  st.header('Virtual RAN Group Center Virtual Control Unit Planning from csv file')
 
     uploaded_file = st.file_uploader("Choose input CSV files to process",type= "csv",accept_multiple_files=True)
     # st.write(len(uploaded_file))
@@ -116,7 +132,9 @@ if selected == "Geolocation Based RAN Planning":
 
         Output_table = pd.merge(Output_Format, site_df_temp, on='Sarf', how='right')
 
-        Total_output = Total_output.append(Output_table)
+        # Total_output = Total_output.append(Output_table)
+        Total_output = pd.concat([Total_output, pd.DataFrame(Output_table)], ignore_index=True)
+
         Output_table = Output_table.reindex(['Sarf', 'lat', 'lon', 'GC_Name', 'group'], axis='columns')
 
         # st.write(Output_table)
@@ -190,6 +208,9 @@ if selected == "Geolocation Based RAN Planning":
         tooltip={"text": "Site: {Sarf}\nlat: {lat}\nlon: {lon}"}
     ))
 
+    csv = convert_df(Total_output)
+    st.download_button(label="Download Result File", data=csv, file_name='Total_output.csv', mime='text/csv', )
+
     st.table(chart_data.head(20))
 
     st.divider()  # 👈 Draws a horizontal rule
@@ -198,9 +219,6 @@ if selected == "Geolocation Based RAN Planning":
     st.divider()  # 👈 Draws a horizontal rule
     st.header('DAY 1 Format Preparation')
     uploaded_file_3 = st.file_uploader("Choose input CSV files to process",type= "csv",accept_multiple_files=True,key = "third")
-
-    csv = convert_df(Total_output)
-    st.download_button(label="Download Result File", data=csv, file_name='Total_output.csv', mime='text/csv', )
 
 if selected == "Geolocation Based RAN Infrastructure Planning":
     import pandas as pd
@@ -212,6 +230,14 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
 
     st.title('Geolocation Based Transport Infrastructure Planning')
     st.header('Fiber optical line distance analysis')
+    st.write("This module is a demo for calculating site to fiber optical line distances for multiple vendors in selected cities. "
+             "Algoritm calculates for 30 sites and 3 fiber optics vendors.  \n"
+             "  \n"
+             "The number of sites and fiber vendors does not ahve any limit by the algorithm. "
+             "Algorithm applies many iterations to find an optimum solution to this planning problem.  \n"
+             "  \n"
+             "Press the button to process data from online database or you can upload your files if you have the format  \n"
+             "You can view, zoom and download the results.")
     # uploaded_file = st.file_uploader("Choose input CSV files to process",type= "csv",accept_multiple_files=True,key = "first")
 
     city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Istanbul","Tel_Aviv","Haifa","Jerusalem"]
@@ -422,6 +448,13 @@ if selected == "Database Migration":
     import numpy as np
     import Data_migration_functions as cpf
 
+    st.write("This module is a demo for creating Planet import files from a selected Atoll Database. "
+             "Planet import files can be created for both Microservices(Cloud) or Desktop version.  \n"
+             "  \n"
+             "Each vendor needs different datatables for conversions  \n" 
+             "  \n"
+             "Press the button to process data from online database or you can upload your files if you have the format  \n")
+
     st.title('Data Migration From Atoll to Planet Microservices')
     st.divider()  # 👈 Draws a horizontal rule
     st.header('Convert Atoll Files to Planet Microservices Format')
@@ -495,6 +528,14 @@ if selected == "Database Migration":
 if selected == "Machine Learning / AI use case design optimization projects":
         from PIL import Image
         st.title('Machine Learning Network Performance Booster Toools')
+
+        st.write("This module is a demo for Machine Learning / AI applications. "
+                 "Data processed in python/tensorflow libraries.  \n"
+                 "  \n"
+                 "Each vendor needs different datatables for processing  \n"
+                 "  \n"
+                 "Press the button to process data from online database or you can upload your files if you have the format  \n")
+
         st.divider()  # 👈 Draws a horizontal rule
         st.header('KPI Anomaly Heat-Map')
         uploaded_file = st.file_uploader("Choose files",accept_multiple_files=True,key="1")
@@ -519,6 +560,10 @@ if selected == "Database Management":
 
     st.title('Database Management')
     st.header('Database Connection')
+
+    st.write("This module is a demo for Database management Admin operations. "
+             "  \n"
+             "  \n")
 
     if st.button('Connect dB'):
         uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
@@ -632,6 +677,21 @@ if selected == "Database Management":
         df = pd.DataFrame(list(all_data_from_db))
         st.write(df)
 
+
+    st.divider()  # 👈 Draws a horizontal rule
+    st.header('Copy Collection')
+
+    db_name_read = st.text_input('dB name to copy')
+    collection_name_old = st.text_input('Collection name to copy')
+    collection_name_new = st.text_input('New collection name')
+
+    if st.button('Rename dB'):
+        uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+        cluster = MongoClient(uri, server_api=ServerApi('1'))
+        db = cluster[db_name_read]
+        db[collection_name_old].rename(collection_name_new)
+        st.write("Collection renamed:", collection_name_new)
+
 if selected == "Performance Monitoring and Optimization":
     import pandas as pd
     import numpy as np
@@ -641,6 +701,12 @@ if selected == "Performance Monitoring and Optimization":
 
     st.title('Site information')
     st.header('Map and table views')
+    st.write("This module is a demo for Performance Monitoring and Optimization. "
+             "Standard KPI indicators will be shown here alongside tailor made KPI indicators.  \n"
+             "  \n"
+             "Each vendor needs different datatables for processing  \n"
+             "  \n"
+             "Select city and Site to see on map and table view  \n")
 
     db_name_read = "Sites" # st.text_input('dB name to read')
     city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Istanbul","Tel_Aviv","Haifa","Jerusalem"]
@@ -900,6 +966,12 @@ if selected == "Reporting and Analytics":
     st.title('RAN information')
     st.header('Site view')
 
+    st.write("This module is a demo for reporting and analytics solutions. "
+             "  \n"
+             "Each vendor needs different analytics solutions and combinations \n"
+             "  \n"
+             "Select City/Region/Site information  \n")
+
     db_name_read = "Sites" # st.text_input('dB name to read')
     city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Istanbul","Tel_Aviv","Haifa","Jerusalem"]
     option = st.selectbox('Please Select The City', city_list,key = 25)
@@ -1002,6 +1074,10 @@ if selected == "Radio Frequency (RF) Planning and Optimization":
 
     st.title('Radio Frequency (RF) Planning and Optimization')
     st.header('Site view')
+
+    st.write("This module is a demo for RF Planning tools. "
+             "  \n"
+             "Press the button to process data from online database or you can upload your files if you have the format  \n")
 
     db_name_read = "Sites" # st.text_input('dB name to read')
     city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Istanbul","Tel_Aviv","Haifa","Jerusalem"]
