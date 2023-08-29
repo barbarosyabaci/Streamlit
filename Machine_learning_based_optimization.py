@@ -434,8 +434,18 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
                     tooltip=True,
                     radiusScale=2,
                     radiusMinPixels=2,
-                    radiusMaxPixels=2, # get_radius=50,
-        ),
+                    radiusMaxPixels=2), # get_radius=50,
+                pdk.Layer(type="TextLayer",
+                    data=df_tokyo_mongodb,
+                    pickable=False,
+                    get_position=["lon", "lat"],
+                    get_text="labels",
+                    get_size=12,
+                    get_color=[0, 0, 0],
+                    get_angle=0,  # Note that string constants in pydeck are explicitly passed as strings
+                        # This distinguishes them from columns in a data set
+                    getTextAnchor='"middle"',
+                    get_alignment_baseline='"bottom"'),
             ],
             # tooltip={"Name: {name}"}
             tooltip = {"text": "Site Name: {Site Name}"}
