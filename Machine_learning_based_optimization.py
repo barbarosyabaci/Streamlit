@@ -288,6 +288,12 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
         df_tab_file_2 = gpd.read_file(File_Name_2, driver="MapInfo File")
         df_tab_file_3 = gpd.read_file(File_Name_3, driver="MapInfo File")
         tab_files = [df_tab_file, df_tab_file_2, df_tab_file_3]
+
+        df_tab_file1 = df_tab_file
+        df_tab_file2 = df_tab_file_2
+        df_tab_file3 = df_tab_file_3
+
+
         # Reading from online db
 
 
@@ -298,6 +304,9 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
         # tab file start
         j = 0
         color_list = ["#ed1c24","#0246ff","#ffcc33"]
+
+
+
         for df_tab_file in tab_files:
             # st.write(df_tab_file)
             df_tab_file['path'] = df_tab_file.apply(lambda x: [y for y in x['geometry'].coords], axis=1)
@@ -327,6 +336,7 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
         df_news_0 = df_news[0]
         df_news_1 = df_news[1]
         df_news_2 = df_news[2]
+
 
 
     # Reading sites from database to plan
@@ -360,15 +370,17 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
         min_results_V2 = []
 
 
+
         for i in range(len(df_points)):
             point = (df_points.iloc[i].lat, df_points.iloc[i].lon)
-            min_distance_1 = path_line_dist(df_tab_file,point)
-            min_distance_2 = path_line_dist(df_tab_file_2,point)
-            min_distance_3 = path_line_dist(df_tab_file_3,point)
+            min_distance_1 = path_line_dist(df_tab_file1,point)
+            min_distance_2 = path_line_dist(df_tab_file2,point)
+            min_distance_3 = path_line_dist(df_tab_file3,point)
             points.append(point)
             min_results_own.append(min_distance_1[0])
             min_results_V1.append(min_distance_2[0])
             min_results_V2.append(min_distance_3[0])
+            # print(min_distance_1[0],min_distance_3[0])
 
         df_result["Point"] = points
         df_result["Site Name"] = df_tokyo_mongodb["Site Name"]
