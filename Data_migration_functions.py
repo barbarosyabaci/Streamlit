@@ -46,7 +46,8 @@ def Atoll_to_planet_MS(file_list):
 
     # Combining the cell files for NR and LTE
 
-    df = df_planet_Cell_File_lte.append(df_planet_Cell_File_nr)
+    # df = df_planet_Cell_File_lte.append(df_planet_Cell_File_nr)
+    df = pd.concat([df_planet_Cell_File_lte, df_planet_Cell_File_nr])
     # df = df_planet_Cell_File_nr
     df['Cell ID'] = df['Cell ID'].astype('Int64')
     df['TAC'] = df['TAC'].astype('Int64')
@@ -474,7 +475,7 @@ def Create_LTE_cells_table(file_list):
 
     # Radius and resolution settings
     df_planet_lte_cells["Distance (km)"] = df_atoll_lte_cells["Extended Calculation Radius (m)"]/1000
-    df_planet_lte_cells["Inner Area Radius (m)"] = df_atoll_lte_cells["Main Calculation Radius (m)"]
+    # df_planet_lte_cells["Inner Area Radius (m)"] = df_atoll_lte_cells["Main Calculation Radius (m)"]
     df_planet_lte_cells["Output Resolution (m)"] = df_atoll_lte_cells["Main Resolution (m)"]
     df_planet_lte_cells["Outer Area Resolution (m)"] = df_atoll_lte_cells["Extended Resolution (m)"]
 
@@ -841,7 +842,7 @@ def Create_NR_cells_table(file_list):
 
     # Radius and resolution settings
     df_planet_NR_cells["Distance (km)"] = df_atoll_NR_cells["Extended Calculation Radius (m)"]/1000
-    df_planet_NR_cells["Inner Area Radius (m)"] = df_atoll_NR_cells["Main Calculation Radius (m)"]
+    # df_planet_NR_cells["Inner Area Radius (m)"] = df_atoll_NR_cells["Main Calculation Radius (m)"]
     df_planet_NR_cells["Output Resolution (m)"] = df_atoll_NR_cells["Main Resolution (m)"]
     df_planet_NR_cells["Outer Area Resolution (m)"] = df_atoll_NR_cells["Extended Resolution (m)"]
 
