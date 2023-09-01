@@ -757,21 +757,22 @@ if selected == "Database Management":
 
     st.divider()  # 👈 Draws a horizontal rule
     st.header('Create Collection with CSV file')
-    db_name_update = st.text_input('Collection name to update')
+    db_name_update = st.text_input('dB name to update')
+    col_name_update = st.text_input('Collection name to update')
     uploaded_file = st.file_uploader("Choose input CSV file to process", type="csv", accept_multiple_files=False)
 
-    if st.button('Update Sites Collection'):
+    if st.button('Update Collection'):
         import pandas as pd
         uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
         cluster = MongoClient(uri, server_api=ServerApi('1'))
-        db = cluster["Sites"]
+        db = cluster[db_name_update]
 
         df_tokyo = pd.read_csv(uploaded_file, index_col=False)
         df_tokyo["_id"] = df_tokyo["Site Name"]
         df_tokyo.reset_index(inplace=True)
 
         df_tokyo_dict = df_tokyo.to_dict("records")
-        db[db_name_update].insert_many(df_tokyo.to_dict('records'))
+        db[col_name_update].insert_many(df_tokyo.to_dict('records'))
 
     st.divider()  # 👈 Draws a horizontal rule
 
