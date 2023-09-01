@@ -775,14 +775,15 @@ if selected == "Database Management":
 
     st.divider()  # 👈 Draws a horizontal rule
 
-    st.header('Create a Database')
+    st.header('Create a Collection')
     db_name = st.text_input('dB name to create')
-    if st.button('Create dB'):
+    col_name = st.text_input('Collection name to create')
+    if st.button('Create Collection'):
         uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
         cluster = MongoClient(uri, server_api=ServerApi('1'))
-        st.write('dB Created:', db_name)
-        db = cluster["Sites"]
-        collection = db[db_name]
+        st.write('Collection Created:', col_name)
+        db = cluster[db_name]
+        collection = db[col_name]
         collection.insert_one({"_id": "Temp", "user_name": "byabaci"})
 
     st.divider()  # 👈 Draws a horizontal rule
