@@ -352,7 +352,7 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
         cluster = MongoClient(uri, server_api=ServerApi('1'))
         db = cluster[db_name_read]
         all_data_from_db = db[collection_name].find({})
-        df_tokyo_mongodb = pd.DataFrame(list(all_data_from_db)).head(30)
+        df_tokyo_mongodb = pd.DataFrame(list(all_data_from_db)).head(10)
 
     # Uploaded sites list
 
@@ -459,7 +459,7 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
         # df_tokyo_mongodb = pd.read_csv(uploaded_file, index_col=0)
         # st.write(uploaded_file)
 
-        site_df = pd.read_csv(uploaded_file[0]).head(30)
+        site_df = pd.read_csv(uploaded_file[0]).head(10)
 
 
         df_tab_file = gpd.read_file(File_Name, driver="MapInfo File")
@@ -517,8 +517,8 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
         cluster = MongoClient(uri, server_api=ServerApi('1'))
         db = cluster[db_name_read]
         all_data_from_db = db[collection_name].find({})
-        # df_tokyo_mongodb = pd.DataFrame(list(all_data_from_db)).head(30)
-        df_tokyo_mongodb = site_df.head(50) # pd.DataFrame(list(site_df)).head(30)
+        # df_tokyo_mongodb = pd.DataFrame(list(all_data_from_db)).head(10)
+        df_tokyo_mongodb = site_df.head(10) # pd.DataFrame(list(site_df)).head(10)
 
         # st.write(df_tokyo_mongodb.columns)
 
