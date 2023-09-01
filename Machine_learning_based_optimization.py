@@ -724,7 +724,7 @@ if selected == "Database Management":
             print(e)
         df_1 = pd.DataFrame(list(cluster.list_databases()))
         # for i in df_1[]
-        st.write(df_1)
+        st.dataframe(df_1)
 
     st.divider()  # 👈 Draws a horizontal rule
     st.header('List Collections in Databases')
