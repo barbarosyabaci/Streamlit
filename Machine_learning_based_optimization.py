@@ -453,7 +453,7 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
 
         st.dataframe(df_result)
 
-    uploaded_file = st.file_uploader("Choose input CSV files to process",type= "csv",accept_multiple_files=True)
+    uploaded_file = st.file_uploader("Choose input CSV files to process",type= "csv",accept_multiple_files=True,key = "grtey")
 
     if st.button('Process uploaded files'):
         # df_tokyo_mongodb = pd.read_csv(uploaded_file, index_col=0)
