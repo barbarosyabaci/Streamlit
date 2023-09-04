@@ -46,7 +46,7 @@ if selected == "Geolocation Based RAN Planning":
     gc_df = []
     site_df =[]
 
-    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo","Osaka","London","Manchester","Birmingham","Paris", "Istanbul","Tel_Aviv","Haifa","Jerusalem"]
+    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo","Osaka","London","Manchester","Birmingham","Paris", "Istanbul"]
     option = st.selectbox('Please Select The City', city_list)
     if st.button("Process from online database"):
         import pandas as pd
@@ -240,7 +240,7 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
              "You can view, zoom and download the results.")
     # uploaded_file = st.file_uploader("Choose input CSV files to process",type= "csv",accept_multiple_files=True,key = "first")
 
-    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Istanbul","Tel_Aviv","Haifa","Jerusalem"]
+    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Istanbul"]
     option = st.selectbox('Please Select The City to view fiber optical lines', city_list)
     dir = "C:/Users/barba/Downloads/data/fiber/"
 
@@ -846,7 +846,7 @@ if selected == "Performance Monitoring and Optimization":
              "Select city and Site to see on map and table view  \n")
 
     db_name_read = "Sites" # st.text_input('dB name to read')
-    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Istanbul","Tel_Aviv","Haifa","Jerusalem"]
+    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Istanbul"] # "Tel_Aviv","Haifa","Jerusalem"
     option_1 = st.selectbox('Please Select The City', city_list,key=1)
     collection_name = option_1 # st.text_input('Collection name to read')
     # if st.button('Read Collection'):
@@ -1110,7 +1110,7 @@ if selected == "Reporting and Analytics":
              "Select City/Region/Site information  \n")
 
     db_name_read = "Sites" # st.text_input('dB name to read')
-    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Istanbul","Tel_Aviv","Haifa","Jerusalem"]
+    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Istanbul"]
     option = st.selectbox('Please Select The City', city_list,key = 25)
     collection_name = option # st.text_input('Collection name to read')
     # if st.button('Read Collection'):
@@ -1217,7 +1217,7 @@ if selected == "Radio Frequency (RF) Planning and Optimization":
              "Press the button to process data from online database or you can upload your files if you have the format  \n")
 
     db_name_read = "Sites" # st.text_input('dB name to read')
-    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Istanbul","Tel_Aviv","Haifa","Jerusalem"]
+    city_list = ["Dusseldorf", "Essen", "Frankfurt", "Cologne", "Tokyo", "Osaka", "London", "Manchester", "Birmingham", "Istanbul"]
     option = st.selectbox('Please Select The City', city_list,key = 25)
     collection_name = option # st.text_input('Collection name to read')
     # if st.button('Read Collection'):
