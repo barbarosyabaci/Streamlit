@@ -1,0 +1,14 @@
+Test URL,Test Type
+8.8.8.8,PING
+URI: https://ash-speed.hetzner.com/1GB.bin,FDTT http DL MT
+URI: http://d26kjwdsl72dzf.cloudfront.net/upload,FDTT http UL MT
+URI: https://www.google.de/,Google.de
+URI: http://press21deq5.s3.dualstack.eu-central-1.amazonaws.com/Kepler_mobile/index.html,Kepler
+URI: https://www.gmx.net/,gmx.de
+URI: https://de.m.wikipedia.org/wiki/Europa,Wikipedia
+URI: https://www.chip.de/,Chip.de
+Source Uri: https://www.youtube.com/watch?v=BQwC_DJSdfE,youtube
+URI: https://www.instagram.com/,instagram
+URI: https://www.amazon.de/,Amazon.de
+URI: http://212.183.159.230/5MB.zip,FDFS http DL ST
+URI: http://press21deq5.s3.dualstack.eu-central-1.amazonaws.com/upload/,FDFS http UL ST

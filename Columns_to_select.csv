@@ -1,0 +1,218 @@
+Columns_to_select
+Time
+Date
+Latitude
+Longitude
+Grouping
+Grouping_with_Direction
+Grouping_with_Direction_HTTP
+Grouping_with_Direction_Ping
+Operator
+Ping_Delay_ms_Avg
+Task_Type
+Technology
+HTTP_URL
+Streaming_URL
+Ping_Address
+Serving Cell RS SINR (dB)
+Serving Cell RSRP (dBm)
+Serving Cell RSRQ (dB)
+HTTP_Download_Average_Throughput
+HTTP_Download_Service_Average_Throughput
+HTTP_Download_Session_Failure_Ratio
+HTTP_Download_Session_Success_Ratio
+HTTP_Upload_Average_Throughput
+HTTP_Upload_Service_Average_Throughput
+HTTP_Upload_Session_Failure_Ratio
+HTTP_Upload_Session_Success_Ratio
+Streaming Aggregated Average Session Resolution
+Streaming Audio Bit Rate
+Streaming Average Throughput (kbps)
+Streaming Duration (second)
+Streaming Frame Height
+Streaming Frame Width
+Streaming Impairment Free Ratio
+Streaming Packet Loss
+Streaming Player Download Data Transfer Failure Ratio
+Streaming Player Service IP Access Failure Ratio
+Streaming Player Session Failure Ratio
+Streaming Reproduction Cut-off Ratio
+Streaming Reproduction Start Failure Ratio
+Streaming Session Cutoff Ratio
+Streaming Success Ratio
+Streaming Throughput (kbps)
+Streaming Video Best Resolution
+Streaming Video Bit Rate
+Streaming Video Download Data Transfer Failure Ratio
+Streaming Video Interruption Count
+Streaming Video Interruption Duration
+Streaming Video Interruption Duration Ratio
+Streaming Video Play Start Failure Ratio
+Streaming Video Playout Duration (s)
+Streaming Video Service IP Access Failure Ratio
+Streaming Video Session Failure Ratio
+Streaming_Average_Session_Resolution
+Streaming_Average_Throughput
+Streaming_Completion_Rate
+Streaming_Duration
+Streaming_HD_Resolution
+Streaming_HD_Resolution_Ratio
+Streaming_Impairment_Free
+Streaming_Impairment_Free_Video_Session_Ratio
+Streaming_Maximum_Duration_Of_Video_Session_Interruptions
+Streaming_Number_Of_Video_Session_Interruptions
+Streaming_Outcome_Type
+Streaming_Player_Size_kB
+Streaming_Reproduction_Cutoff_Ratio
+Streaming_Reproduction_Start_Delay_sec
+Streaming_Reproduction_Start_Failure_Ratio
+Streaming_Service_Access_Time_ms
+Streaming_Service_Access_Time_sec
+Streaming_Session_Failure_Ratio
+Streaming_Session_Qualified
+Streaming_Session_Qualified_Ratio
+Streaming_Session_Video_Interruption_Duration
+Streaming_Session_Without_Interruption_Rate
+Streaming_Setup_Success_Rate
+Streaming_State_Prebuffering_to_Reproducing_Delay
+Streaming_State_Request_to_Prebuffering_Delay
+Streaming_State_Request_to_Reproducing_Delay
+Application Layer Throughput Downlink (kbps)
+Application Layer Throughput Downlink (Mbps)
+Application Layer Throughput Uplink (kbps)
+Application Layer Throughput Uplink (Mbps)
+SessionTime
+SessionTime_Upload
+ThroughputCountOver1MBit
+ThroughputCountOver3MBit
+ThroughputPercentageOver3MBit
+TCP_Handshake_Time_sec
+TLS Handshake Failure Ratio (%)
+Multi_RAT_Phy_Throughput_DL_kbps
+Multi_RAT_Phy_Throughput_DL_Mbps
+Multi_RAT_Phy_Throughput_UL_kbps
+Multi_RAT_Phy_Throughput_UL_Mbps
+Ping_Count_Attempts
+Ping_Count_Failed
+Ping_Count_Success
+Ping_Delay_ms_Max
+Ping_Delay_ms_Min
+Ping_Packet_Loss_Rate
+Ping_Packet_Success_Rate
+Ping_Roundtrip_Time_ms
+Ping_Roundtrip_Time_sec
+Ping_Size
+Serving Cell Channel RSSI (dBm)
+Serving Cell DL EARFCN
+Serving Cell eMTC Cell Indication
+Serving Cell Frequency Band
+Serving Cell Identity
+Serving Cell Serving Cell EN-DC Support
+MAC DL Throughput (kbps)
+MAC DL Throughput Carrier 1 (kbps)
+MAC DL Throughput Carrier 2 (kbps)
+MAC DL Throughput Carrier 3 (kbps)
+MAC DL Throughput Carrier 4 (kbps)
+MAC UL Throughput (kbps)
+MAC UL Throughput Carrier 1 (kbps)
+MAC UL Throughput Carrier 2 (kbps)
+PDSCH Modulation C1 TB0
+PDSCH CW0 BLER Carrier 1 (%)
+PDSCH Phy Throughput (kbps)
+PUSCH Phy Throughput (kbps)
+PUSCH BLER Carrier 1 (%)
+Serving Beam 1 Band
+Serving Beam 1 Bandwidth DL
+Serving Beam 1 Cell Identity
+Serving Beam 1 Cell Type
+Serving Beam 1 GSCN
+Serving Beam 1 NRARFCN DL
+Serving Beam 1 SSB Index
+Serving Beam 1 SSB RSRP (dBm)
+Serving Beam 1 SSB RSRQ (dB)
+PDSCH RI: RI SB = 0
+PDSCH BLER (%): BLER SB = 0
+PDSCH Modulation CW0: MOD SB = 0
+NR Phy Throughput Multi-RAT DL (kbps)
+NR Phy Throughput Multi-RAT DL (Mbps)
+PDSCH Phy Throughput Total (kbps)
+PDSCH Phy Throughput Total (Mbps)
+NR Phy Throughput Multi-RAT UL (kbps)
+NR Phy Throughput Multi-RAT UL (Mbps)
+Data Radio Bearer
+Mode
+Multi RAT Connectivity Mode
+Data_Radio_Bearer
+Fixed_Duration
+IP_Interruption_Time_ms
+Is_Multi_RAB
+LTE_Serving_Cell_Count_Average
+Radio_Access_Technology
+Service_Bearer
+FTP Download kBytes Received (Cumulative)
+FTP Download Throughput Current (kbps)
+FTP Download Throughput Current (Mbps)
+FTP Download Throughput Mean (kbps)
+FTP Download Throughput Mean (Mbps)
+FTP Download Transfer Time (second)
+FTP_Download_Average_Throughput_Not_Completed_Session
+FTP_Download_Bearer
+FTP_Download_Error_Cause
+FTP_Download_Outcome
+FTP_Download_Session_Failure_Ratio
+FTP_Download_Session_Success_Ratio
+FTP_Server_File
+Seconds_Start_to_End_FTP_Download
+FTP_Download_Data_Transfer_Cutoff_Ratio_Method_A
+FTP_Download_Data_Transfer_Success_Ratio_Method_A
+FTP_Download_IP_Service_Access_Failure_Ratio_Method_A
+FTP_Download_IP_Service_Setup_Success_Ratio_Method_A
+FTP_Download_IP_Service_Setup_Time_sec_Method_A
+FTP_Download_Transfer_Start_Delay_Method_A
+FTP_Download_Data_Transfer_Cutoff_Ratio_Method_B
+FTP_Download_Data_Transfer_Success_Ratio_Method_B
+FTP_Download_IP_Service_Access_Failure_Ratio_Method_B
+FTP_Download_IP_Service_Setup_Success_Ratio_Method_B
+FTP_Download_IP_Service_Setup_Time_sec_Method_B
+Seconds_Start_to_End_FTP_Upload
+FTP_Upload_Bearer
+FTP_Upload_Outcome
+FTP_Upload_IP_Service_Access_Failure_Ratio_Method_A
+FTP_Upload_IP_Service_Setup_Success_Ratio_Method_A
+FTP_Upload_IP_Service_Setup_Time_sec_Method_A
+FTP_Upload_Transfer_Start_Delay_Method_A
+FTP_Upload_IP_Service_Access_Failure_Ratio_Method_B
+FTP_Upload_IP_Service_Setup_Success_Ratio_Method_B
+FTP_Upload_IP_Service_Setup_Time_sec_Method_B
+FTP Upload kBytes Sent (Cumulative)
+FTP Upload Throughput Current (kbps)
+FTP Upload Throughput Current (Mbps)
+FTP Upload Throughput Mean (kbps)
+FTP Upload Throughput Mean (Mbps)
+FTP Upload Transfer Time (second)
+Seconds_Start_to_End_UDP_Download
+UDP_Download_Error_Cause
+Jitter
+Packets Lost (%)
+UDP Download Average Throughput (kbps)
+UDP Download kBytes Received (Cumulative)
+UDP Download Throughput (kbps)
+UDP Download Transfer Time (second)
+Seconds_Start_to_End_UDP_Upload
+UDP_Upload_Error_Cause
+UDP Upload Average Throughput (kbps)
+UDP Upload kBytes Sent (Cumulative)
+UDP Upload kBytes Sent (Current)
+UDP Upload Throughput (kbps)
+UDP Upload Transfer Time (second)
+IE Browse Download Time (ms)
+IE Browse Page Size (Bytes)
+DNS_Client
+DNS_Domain_Name
+DNS_First_In_Session
+DNS_Host_Name_Resolution_Failure_Ratio
+DNS_Host_Name_Resolution_Time_sec
+DNS_Host_Name_Total_Resolution_Time_sec
+DNS_Resolved_Address
+DNS_Server_Address
+Resolution Success Ratio (%)
