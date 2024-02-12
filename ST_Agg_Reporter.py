@@ -88,7 +88,7 @@ if selected == "CDR Reporting":
             "Streaming_Average_Throughput": 'mean', "Streaming_Session_Failure_Ratio": 'mean', "Streaming_Success_Rate": 'mean'})
 
         # Using pivot_table to calculate multiple columns for the filtered rows
-        pivot_result = pd.pivot_table(df_rd, index=["Test_ID", "Test_type"], values=agg_columns, aggfunc=result_list)
+        pivot_result = pd.pivot_table(df_rd, index=["Session_ID","Test_ID","Test_type"], values=agg_columns, aggfunc=result_list)
         df_pivot_pre = pivot_result.reset_index()
 
         new_column_order_2 = ['Test_ID', 'Test_type', 'Serving Cell RS SINR (dB)', 'Serving Cell RSRP (dBm)', 'Serving Cell RSRQ (dB)', 'HTTP_Download_Average_Throughput', 'HTTP_Download_Service_Average_Throughput', 'HTTP_Download_Session_Failure_Ratio', 'HTTP_Download_Session_Success_Ratio', 'HTTP_Upload_Average_Throughput', 'HTTP_Upload_Service_Average_Throughput', 'HTTP_Upload_Session_Failure_Ratio', 'HTTP_Upload_Session_Success_Ratio', 'Streaming_Average_Throughput',
@@ -106,7 +106,7 @@ if selected == "CDR Reporting":
             df_rd.to_csv('Selected_Metrics.csv', mode='w', header=True, index=False)
             csv = convert_df(df_pivot_pre)
             st.download_button(label="Download Result File", data=csv, file_name="Aggregate_Results.csv", mime='text/csv', )
-            # webbrowser.open("Selected_Metrics.csv")
+            webbrowser.open("Selected_Metrics.csv")
         except:
             print("Cannot export: files are already open")
 
