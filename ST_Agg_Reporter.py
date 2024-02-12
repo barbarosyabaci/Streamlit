@@ -98,14 +98,14 @@ if selected == "CDR Reporting":
 
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
-            return df.to_csv().encode('utf-8')
+            return df.to_csv(index=False).encode('utf-8')
 
         try:
             df_pivot_pre.to_csv('Aggregate_Results.csv', mode='w', header=True, index=False)
             # webbrowser.open("Aggregate_Results.csv")
             df_rd.to_csv('Selected_Metrics.csv', mode='w', header=True, index=False)
             csv = convert_df(df_pivot_pre)
-            st.download_button(label="Download Result File", data=csv, file_name="Aggregate_Results.csv", mime='text/csv' )
+            st.download_button(label="Download Result File", data=csv, file_name="Aggregate_Results.csv", mime='text/csv')
             st.dataframe(df_pivot_pre)
             # webbrowser.open("Selected_Metrics.csv")
         except:
