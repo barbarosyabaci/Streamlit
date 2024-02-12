@@ -106,7 +106,7 @@ if selected == "CDR Reporting":
             df_rd.to_csv('Selected_Metrics.csv', mode='w', header=True, index=False)
             csv = convert_df(df_pivot_pre)
             st.download_button(label="Download Result File", data=csv, file_name="Aggregate_Results.csv", mime='text/csv', )
-            webbrowser.open("Selected_Metrics.csv")
+            # webbrowser.open("Selected_Metrics.csv")
         except:
             print("Cannot export: files are already open")
 
