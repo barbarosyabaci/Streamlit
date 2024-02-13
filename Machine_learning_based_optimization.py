@@ -244,9 +244,9 @@ if selected == "Geolocation Based RAN Infrastructure Planning":
     option = st.selectbox('Please Select The City to view fiber optical lines', city_list)
     dir = "C:/Users/barba/Downloads/data/fiber/"
 
-    File_Name = option[:3]+"_fiber.tab"
-    File_Name_2 = option[:3] + "_fiber_2.tab"
-    File_Name_3 = option[:3] + "_fiber_3.tab"
+    File_Name = "Fiber_data/"+ option[:3]+"_fiber.tab"
+    File_Name_2 = "Fiber_data/"+ option[:3] + "_fiber_2.tab"
+    File_Name_3 = "Fiber_data/"+ option[:3] + "_fiber_3.tab"
     # File_Name = "C:/Users/barba/Downloads/data/fiber/Mainz.tab"
     def hex_to_rgb(h):
         h = h.lstrip("#")
