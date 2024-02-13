@@ -40,7 +40,7 @@ if selected == "CDR Reporting":
 
         df = pd.read_csv(csv_file_name, low_memory=False)
 
-        sel_columns = pd.read_csv("Columns_to_select.csv")["Columns_to_select"].tolist()
+        sel_columns = pd.read_csv("Config_data/Columns_to_select.csv")["Columns_to_select"].tolist()
         df_sel = df[sel_columns]
 
         # Function to concatenate non-NaN values of specific columns
@@ -64,18 +64,18 @@ if selected == "CDR Reporting":
         df_sel['Test_ID'] = pd.cut(df_sel.index, bins=[0] + n_e_r_2, labels=labels_2, right=False)
         df_sel['Test_type'] = pd.cut(df_sel.index, bins=[0] + n_e_r_2, labels=labels_3, right=False, ordered=False)
 
-        df_rep = pd.read_csv("Test_type.csv")
+        df_rep = pd.read_csv("Config_data/Test_type.csv")
         my_dict = dict(zip(df_rep.iloc[:, 0], df_rep.iloc[:, 1]))
 
         df_sel['Test_type'] = df_sel['Test_type'].replace(my_dict)
 
-        new_column_order = pd.read_csv("Columns_order.csv")["Order"].tolist()
+        new_column_order = pd.read_csv("Config_data/Columns_order.csv")["Order"].tolist()
         df_rd = df_sel[new_column_order]
 
         # Filtering rows based on a condition (e.g., age greater than 25)
         filtered_rows = df_rd.loc[df_rd['Test_ID'] == 2]
 
-        df_agg = pd.read_csv("Columns_to_report_functions.csv")
+        df_agg = pd.read_csv("Config_data/Columns_to_report_functions.csv")
         agg_columns = df_agg.iloc[:, 0].tolist()
         agg_funcs = df_agg.iloc[:, 1].tolist()
         values = [list(map(str, element.split(','))) for element in agg_funcs]
@@ -100,20 +100,13 @@ if selected == "CDR Reporting":
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv(index=False).encode('utf-8')
 
-        try:
-            df_pivot_pre.to_csv('Aggregate_Results.csv', mode='w', header=True, index=False)
-            # webbrowser.open("Aggregate_Results.csv")
-            df_rd.to_csv('Selected_Metrics.csv', mode='w', header=True, index=False)
-            csv = convert_df(df_pivot_pre)
-            st.download_button(label="Download Result File", data=csv, file_name="Aggregate_Results.csv", mime='text/csv')
-            st.dataframe(df_pivot_pre)
-            # webbrowser.open("Selected_Metrics.csv")
-        except:
-            print("Cannot export: files are already open")
-
-
-
-
+        df_pivot_pre.to_csv('Aggregate_Results.csv', mode='w', header=True, index=False)
+        # webbrowser.open("Aggregate_Results.csv")
+        df_rd.to_csv('Selected_Metrics.csv', mode='w', header=True, index=False)
+        csv = convert_df(df_pivot_pre)
+        st.download_button(label="Download Result File", data=csv, file_name="Aggregate_Results.csv", mime='text/csv')
+        st.dataframe(df_pivot_pre)
+        # webbrowser.open("Selected_Metrics.csv")
 
     st.divider()  # 👈 Draws a horizontal rule
 
