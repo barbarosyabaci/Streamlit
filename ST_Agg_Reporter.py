@@ -10,6 +10,7 @@ with st.sidebar:
              "")
     selected = option_menu("RAN Modules",[
         "CDR Reporting",
+        "CDR Reporting V2",
         "CDR Reports Historical Comparison",
         "View Historical Reports",
         "View on Map",
@@ -27,15 +28,12 @@ if selected == "CDR Reporting":
     st.write("This module is a demo for CDR Statistical Reporting. ")
 
 
-
     uploaded_file = st.file_uploader("Choose input zip file to process", type="zip", accept_multiple_files=True)
 
     if st.button('Process uploaded files'):
-        path = "C:/08_2024_DT/HiDrive-CDR/Master Data/O2_CDR_DATA_RATINGEN_20240207/"
-        file_name = "Metric Group 1.zip"
-        csv_file_name = "Metric Group 1.csv"
 
         with zipfile.ZipFile(uploaded_file[0], 'r') as zip_ref:
+            csv_file_name = zip_ref.namelist()[0]
             zip_ref.extract(csv_file_name)
 
         df = pd.read_csv(csv_file_name, low_memory=False)
@@ -72,8 +70,10 @@ if selected == "CDR Reporting":
         new_column_order = pd.read_csv("Config_data/Columns_order.csv")["Order"].tolist()
         df_rd = df_sel[new_column_order]
 
+        # st.write(new_column_order)
+
         # Filtering rows based on a condition (e.g., age greater than 25)
-        filtered_rows = df_rd.loc[df_rd['Test_ID'] == 2]
+        # filtered_rows = df_rd.loc[df_rd['Test_ID'] == 2]
 
         df_agg = pd.read_csv("Config_data/Columns_to_report_functions.csv")
         agg_columns = df_agg.iloc[:, 0].tolist()
@@ -108,9 +108,13 @@ if selected == "CDR Reporting":
         st.dataframe(df_pivot_pre)
         # webbrowser.open("Selected_Metrics.csv")
 
+
+
     st.divider()  # 👈 Draws a horizontal rule
 
     st.header('Report Statistics')
+
+if selected == "CDR Reporting V2":
 
 if selected == "CDR Reports Historical Comparison":
     st.title('Comparison Module for Drive Tests')

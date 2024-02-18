@@ -1,0 +1,16 @@
+Columns_to_select
+Time
+Date
+Latitude
+Longitude
+Grouping
+Grouping_with_Direction
+Grouping_with_Direction_HTTP
+Grouping_with_Direction_Ping
+Operator
+Ping_Delay_ms_Avg
+Task_Type
+Technology
+HTTP_URL
+Streaming_URL
+Ping_Address
