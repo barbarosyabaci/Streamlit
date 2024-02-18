@@ -114,7 +114,6 @@ if selected == "CDR Reporting":
 
     st.header('Report Statistics')
 
-if selected == "CDR Reporting V2":
 
 if selected == "CDR Reports Historical Comparison":
     st.title('Comparison Module for Drive Tests')
