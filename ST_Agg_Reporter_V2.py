@@ -40,7 +40,7 @@ if selected == "CDR Reporting":
 
         # path = "C:/08_2024_DT/HiDrive-CDR/Master Data/O2_CDR_DATA_RATINGEN_20240207/"
         # csv_file_name = path + "Metric Group 1.csv"
-        df = pd.read_csv(csv_file_name, low_memory=False).head(50000)
+        df = pd.read_csv(csv_file_name, low_memory=False).head(100000)
 
         sel_columns = ["Time", "Date", "Latitude", "Longitude", "Grouping", "Grouping_with_Direction", "Grouping_with_Direction_HTTP", "Grouping_with_Direction_Ping", "Operator", "Task_Type", "Technology", "HTTP_URL", "Streaming_URL", "Ping_Address", "Serving Cell RS SINR (dB)", "Serving Cell RSRP (dBm)", "Serving Cell RSRQ (dB)", "HTTP_Download_Average_Throughput", "HTTP_Download_Service_Average_Throughput", "HTTP_Download_Session_Failure_Ratio", "HTTP_Download_Session_Success_Ratio",
             "HTTP_Outcome", "HTTP_Download_Data_Transfer_Failure_Ratio_Method_A", "HTTP_Download_Data_Transfer_Success_Ratio_Method_A", "HTTP_Download_Data_Transfer_Time_sec_Method_A", "HTTP_Download_IP_Service_Access_Failure_Ratio_Method_A", "HTTP_Download_IP_Service_Setup_Success_Ratio_Method_A", "HTTP_Download_IP_Service_Setup_Time_sec_Method_A", "HTTP_Download_Mean_Data_Rate_kbps_Method_A", "HTTP_Download_Transfer_Start_Delay_Method_A", "HTTP_Download_Data_Transfer_Failure_Ratio_Method_B",
@@ -87,20 +87,21 @@ if selected == "CDR Reporting":
 
         agg_str = lambda x: ','.join(filter(lambda s: pd.notna(s), x))
 
-        agg_list = {'Serving Cell RS SINR (dB)': 'mean', 'Serving Cell RSRP (dBm)': 'mean', 'Serving Cell RSRQ (dB)': 'mean', 'HTTP_URL': agg_str, 'HTTP_Download_Average_Throughput': 'mean', 'HTTP_Download_Service_Average_Throughput': 'mean', 'HTTP_Download_Session_Failure_Ratio': 'mean', 'HTTP_Download_Session_Success_Ratio': 'mean', 'HTTP_Outcome': agg_str, "HTTP_Download_Data_Transfer_Failure_Ratio_Method_A": 'mean', "HTTP_Download_Data_Transfer_Success_Ratio_Method_A": 'mean',
-            "HTTP_Download_Data_Transfer_Time_sec_Method_A": 'mean', "HTTP_Download_IP_Service_Access_Failure_Ratio_Method_A": 'mean', "HTTP_Download_IP_Service_Setup_Success_Ratio_Method_A": 'mean', "HTTP_Download_IP_Service_Setup_Time_sec_Method_A": 'mean', "HTTP_Download_Mean_Data_Rate_kbps_Method_A": 'mean', "HTTP_Download_Transfer_Start_Delay_Method_A": 'mean', "HTTP_Download_Data_Transfer_Failure_Ratio_Method_B": 'mean', "HTTP_Download_Data_Transfer_Success_Ratio_Method_B": 'mean',
-            "HTTP_Download_Data_Transfer_Time_sec_Method_B": 'mean', "HTTP_Download_IP_Service_Access_Failure_Ratio_Method_B": 'mean', "HTTP_Download_IP_Service_Setup_Success_Ratio_Method_B": 'mean', "HTTP_Download_IP_Service_Setup_Time_sec_Method_B": 'mean', "HTTP_Download_Mean_Data_Rate_kbps_Method_B": 'mean', "HTTP_Upload_Average_Throughput": 'mean', "HTTP_Upload_Service_Average_Throughput": 'mean', "HTTP_Upload_Service_Transfer_Time": 'mean', "HTTP_Upload_Session_Failure_Ratio": 'mean',
-            "HTTP_Upload_Session_Success_Ratio": 'mean', "HTTP_Upload_Data_Transfer_Failure_Ratio_Method_A": 'mean', "HTTP_Upload_Data_Transfer_Success_Ratio_Method_A": 'mean', "HTTP_Upload_Data_Transfer_Time_sec_Method_A": 'mean', "HTTP_Upload_IP_Service_Access_Failure_Ratio_Method_A": 'mean', "HTTP_Upload_IP_Service_Setup_Success_Ratio_Method_A": 'mean', "HTTP_Upload_IP_Service_Setup_Time_sec_Method_A": 'mean', "HTTP_Upload_Mean_Data_Rate_kbps_Method_A": 'mean', "Streaming_URL": agg_str,
-            "Streaming_Outcome_Type": agg_str, "Aborted_by_User": 'mean', "Streaming_Average_Session_Resolution": 'mean', "Streaming_Average_Throughput": 'mean', "Streaming_Completion_Rate": 'mean', "Streaming_Duration": 'mean', "Streaming_HD_Resolution": agg_str, "Streaming_HD_Resolution_Ratio": 'mean', "Streaming_Impairment_Free": agg_str, "Streaming_Impairment_Free_Video_Session_Ratio": 'mean', "Streaming_Maximum_Duration_Of_Video_Session_Interruptions": 'mean',
-            "Streaming_Number_Of_Video_Session_Interruptions": 'mean', "Streaming_Player_Size_kB": 'mean', "Streaming_Reproduction_Cutoff_Ratio": 'mean', "Streaming_Reproduction_Start_Delay_sec": 'mean', "Streaming_Reproduction_Start_Failure_Ratio": 'mean', "Streaming_Service_Access_Time_ms": 'mean', "Streaming_Service_Access_Time_sec": 'mean', "Streaming_Session_Failure_Ratio": 'mean', "Streaming_Session_Qualified": agg_str, "Streaming_Session_Qualified_Ratio": 'mean',
-            "Streaming_Session_Video_Interruption_Duration": 'mean', "Streaming_Session_Without_Interruption_Rate": 'mean', "Streaming_Setup_Success_Rate": 'mean', "Streaming_State_Prebuffering_to_Reproducing_Delay": 'mean', "Streaming_State_Request_to_Prebuffering_Delay": 'mean', "Streaming_State_Request_to_Reproducing_Delay": 'mean', "Streaming_Success_Rate": 'mean', "Streaming_Throughput_Filtered": 'mean', "Streaming_Total_Duration_Of_Video_Session_Interruptions": 'mean',
-            "Streaming_Video_Buffer_Size_kB": 'mean', "Streaming_Video_IP_Service_Access_Time_ms": 'mean', "Streaming_Video_IP_Service_Access_Time_sec": 'mean', "Streaming_Video_Play_Start_Failure_Ratio": 'mean', "Streaming_Video_Play_Start_Time_sec": 'mean', "Streaming_Video_Session_Cutoff_Ratio": 'mean', "Streaming_Video_Session_Failure_Ratio": 'mean', "Streaming_Video_Session_Success_Ratio": 'mean', "Streaming_Video_Session_Time_sec": 'mean', "Streaming_Video_Size_kB": 'mean',
-            "SessionTime": 'mean', "SessionTime_Upload": 'mean', "ThroughputCountOver1MBit": 'mean', "ThroughputCountOver3MBit": 'mean', "ThroughputPercentageOver3MBit": 'mean', "TCP_Handshake_Time_sec": 'mean', "Ping_Address": agg_str, "Ping_Count_Attempts": 'mean', "Ping_Count_Failed": 'mean', "Ping_Count_Success": 'mean', "Ping_Delay_ms_Avg": 'mean', "Ping_Delay_ms_Max": 'mean', "Ping_Delay_ms_Min": 'mean', "Ping_Packet_Loss_Rate": 'mean', "Ping_Packet_Success_Rate": 'mean',
-            "Ping_Roundtrip_Time_ms": 'mean', "Ping_Roundtrip_Time_sec": 'mean', "Ping_Size": 'mean', "Data_Radio_Bearer": agg_str, "Fixed_Duration": 'mean', "IP_Interruption_Time_ms": 'mean', "Is_Multi_RAB": agg_str, "LTE_Serving_Cell_Count_Average": 'mean', "Radio_Access_Technology": agg_str, "Service_Bearer": agg_str, "FTP_Download_Average_Throughput_Not_Completed_Session": 'mean', "FTP_Download_Bearer": agg_str, "FTP_Download_Error_Cause": 'mean', "FTP_Download_Outcome": 'mean',
-            "FTP_Download_Session_Failure_Ratio": 'mean', "FTP_Download_Session_Success_Ratio": 'mean', "FTP_Server_File": agg_str, "Seconds_Start_to_End_FTP_Download": 'mean', "FTP_Download_Data_Transfer_Cutoff_Ratio_Method_A": 'mean', "FTP_Download_Data_Transfer_Success_Ratio_Method_A": 'mean', "FTP_Download_IP_Service_Access_Failure_Ratio_Method_A": 'mean', "FTP_Download_IP_Service_Setup_Success_Ratio_Method_A": 'mean', "FTP_Download_IP_Service_Setup_Time_sec_Method_A": 'mean',
-            "FTP_Download_Transfer_Start_Delay_Method_A": 'mean', "FTP_Download_Data_Transfer_Cutoff_Ratio_Method_B": 'mean', "FTP_Download_Data_Transfer_Success_Ratio_Method_B": 'mean', "FTP_Download_IP_Service_Access_Failure_Ratio_Method_B": 'mean', "FTP_Download_IP_Service_Setup_Success_Ratio_Method_B": 'mean', "FTP_Download_IP_Service_Setup_Time_sec_Method_B": 'mean', "Seconds_Start_to_End_FTP_Upload": 'mean', "FTP_Upload_Bearer": agg_str, "FTP_Upload_Outcome": agg_str,
-            "FTP_Upload_IP_Service_Access_Failure_Ratio_Method_A": 'mean', "FTP_Upload_IP_Service_Setup_Success_Ratio_Method_A": 'mean', "FTP_Upload_IP_Service_Setup_Time_sec_Method_A": 'mean', "FTP_Upload_Transfer_Start_Delay_Method_A": 'mean', "FTP_Upload_IP_Service_Access_Failure_Ratio_Method_B": 'mean', "FTP_Upload_IP_Service_Setup_Success_Ratio_Method_B": 'mean', "FTP_Upload_IP_Service_Setup_Time_sec_Method_B": 'mean', "Seconds_Start_to_End_UDP_Download": 'mean',
-            "UDP_Download_Error_Cause": agg_str, "Seconds_Start_to_End_UDP_Upload": 'mean', "UDP_Upload_Error_Cause": agg_str, "DNS_Client": agg_str, "DNS_Domain_Name": agg_str, "DNS_First_In_Session": agg_str, "DNS_Host_Name_Resolution_Failure_Ratio": 'mean', "DNS_Host_Name_Resolution_Time_sec": 'mean', "DNS_Host_Name_Total_Resolution_Time_sec": 'mean', "DNS_Resolved_Address": agg_str, "DNS_Server_Address": agg_str}
+        agg_list = {'CombinedColumn': agg_str, 'Serving Cell RS SINR (dB)': 'mean', 'Serving Cell RSRP (dBm)': 'mean', 'Serving Cell RSRQ (dB)': 'mean', 'HTTP_URL': agg_str, 'HTTP_Download_Average_Throughput': 'mean', 'HTTP_Download_Service_Average_Throughput': 'mean', 'HTTP_Download_Session_Failure_Ratio': 'mean', 'HTTP_Download_Session_Success_Ratio': 'mean', 'HTTP_Outcome': agg_str, "HTTP_Download_Data_Transfer_Failure_Ratio_Method_A": 'mean',
+            "HTTP_Download_Data_Transfer_Success_Ratio_Method_A": 'mean', "HTTP_Download_Data_Transfer_Time_sec_Method_A": 'mean', "HTTP_Download_IP_Service_Access_Failure_Ratio_Method_A": 'mean', "HTTP_Download_IP_Service_Setup_Success_Ratio_Method_A": 'mean', "HTTP_Download_IP_Service_Setup_Time_sec_Method_A": 'mean', "HTTP_Download_Mean_Data_Rate_kbps_Method_A": 'mean', "HTTP_Download_Transfer_Start_Delay_Method_A": 'mean', "HTTP_Download_Data_Transfer_Failure_Ratio_Method_B": 'mean',
+            "HTTP_Download_Data_Transfer_Success_Ratio_Method_B": 'mean', "HTTP_Download_Data_Transfer_Time_sec_Method_B": 'mean', "HTTP_Download_IP_Service_Access_Failure_Ratio_Method_B": 'mean', "HTTP_Download_IP_Service_Setup_Success_Ratio_Method_B": 'mean', "HTTP_Download_IP_Service_Setup_Time_sec_Method_B": 'mean', "HTTP_Download_Mean_Data_Rate_kbps_Method_B": 'mean', "HTTP_Upload_Average_Throughput": 'mean', "HTTP_Upload_Service_Average_Throughput": 'mean',
+            "HTTP_Upload_Service_Transfer_Time": 'mean', "HTTP_Upload_Session_Failure_Ratio": 'mean', "HTTP_Upload_Session_Success_Ratio": 'mean', "HTTP_Upload_Data_Transfer_Failure_Ratio_Method_A": 'mean', "HTTP_Upload_Data_Transfer_Success_Ratio_Method_A": 'mean', "HTTP_Upload_Data_Transfer_Time_sec_Method_A": 'mean', "HTTP_Upload_IP_Service_Access_Failure_Ratio_Method_A": 'mean', "HTTP_Upload_IP_Service_Setup_Success_Ratio_Method_A": 'mean',
+            "HTTP_Upload_IP_Service_Setup_Time_sec_Method_A": 'mean', "HTTP_Upload_Mean_Data_Rate_kbps_Method_A": 'mean', "Streaming_URL": agg_str, "Streaming_Outcome_Type": agg_str, "Aborted_by_User": 'mean', "Streaming_Average_Session_Resolution": 'mean', "Streaming_Average_Throughput": 'mean', "Streaming_Completion_Rate": 'mean', "Streaming_Duration": 'mean', "Streaming_HD_Resolution": agg_str, "Streaming_HD_Resolution_Ratio": 'mean', "Streaming_Impairment_Free": agg_str,
+            "Streaming_Impairment_Free_Video_Session_Ratio": 'mean', "Streaming_Maximum_Duration_Of_Video_Session_Interruptions": 'mean', "Streaming_Number_Of_Video_Session_Interruptions": 'mean', "Streaming_Player_Size_kB": 'mean', "Streaming_Reproduction_Cutoff_Ratio": 'mean', "Streaming_Reproduction_Start_Delay_sec": 'mean', "Streaming_Reproduction_Start_Failure_Ratio": 'mean', "Streaming_Service_Access_Time_ms": 'mean', "Streaming_Service_Access_Time_sec": 'mean',
+            "Streaming_Session_Failure_Ratio": 'mean', "Streaming_Session_Qualified": agg_str, "Streaming_Session_Qualified_Ratio": 'mean', "Streaming_Session_Video_Interruption_Duration": 'mean', "Streaming_Session_Without_Interruption_Rate": 'mean', "Streaming_Setup_Success_Rate": 'mean', "Streaming_State_Prebuffering_to_Reproducing_Delay": 'mean', "Streaming_State_Request_to_Prebuffering_Delay": 'mean', "Streaming_State_Request_to_Reproducing_Delay": 'mean', "Streaming_Success_Rate": 'mean',
+            "Streaming_Throughput_Filtered": 'mean', "Streaming_Total_Duration_Of_Video_Session_Interruptions": 'mean', "Streaming_Video_Buffer_Size_kB": 'mean', "Streaming_Video_IP_Service_Access_Time_ms": 'mean', "Streaming_Video_IP_Service_Access_Time_sec": 'mean', "Streaming_Video_Play_Start_Failure_Ratio": 'mean', "Streaming_Video_Play_Start_Time_sec": 'mean', "Streaming_Video_Session_Cutoff_Ratio": 'mean', "Streaming_Video_Session_Failure_Ratio": 'mean',
+            "Streaming_Video_Session_Success_Ratio": 'mean', "Streaming_Video_Session_Time_sec": 'mean', "Streaming_Video_Size_kB": 'mean', "SessionTime": 'mean', "SessionTime_Upload": 'mean', "ThroughputCountOver1MBit": 'mean', "ThroughputCountOver3MBit": 'mean', "ThroughputPercentageOver3MBit": 'mean', "TCP_Handshake_Time_sec": 'mean', "Ping_Address": agg_str, "Ping_Count_Attempts": 'mean', "Ping_Count_Failed": 'mean', "Ping_Count_Success": 'mean', "Ping_Delay_ms_Avg": 'mean',
+            "Ping_Delay_ms_Max": 'mean', "Ping_Delay_ms_Min": 'mean', "Ping_Packet_Loss_Rate": 'mean', "Ping_Packet_Success_Rate": 'mean', "Ping_Roundtrip_Time_ms": 'mean', "Ping_Roundtrip_Time_sec": 'mean', "Ping_Size": 'mean', "Data_Radio_Bearer": agg_str, "Fixed_Duration": 'mean', "IP_Interruption_Time_ms": 'mean', "Is_Multi_RAB": agg_str, "LTE_Serving_Cell_Count_Average": 'mean', "Radio_Access_Technology": agg_str, "Service_Bearer": agg_str,
+            "FTP_Download_Average_Throughput_Not_Completed_Session": 'mean', "FTP_Download_Bearer": agg_str, "FTP_Download_Error_Cause": 'mean', "FTP_Download_Outcome": 'mean', "FTP_Download_Session_Failure_Ratio": 'mean', "FTP_Download_Session_Success_Ratio": 'mean', "FTP_Server_File": agg_str, "Seconds_Start_to_End_FTP_Download": 'mean', "FTP_Download_Data_Transfer_Cutoff_Ratio_Method_A": 'mean', "FTP_Download_Data_Transfer_Success_Ratio_Method_A": 'mean',
+            "FTP_Download_IP_Service_Access_Failure_Ratio_Method_A": 'mean', "FTP_Download_IP_Service_Setup_Success_Ratio_Method_A": 'mean', "FTP_Download_IP_Service_Setup_Time_sec_Method_A": 'mean', "FTP_Download_Transfer_Start_Delay_Method_A": 'mean', "FTP_Download_Data_Transfer_Cutoff_Ratio_Method_B": 'mean', "FTP_Download_Data_Transfer_Success_Ratio_Method_B": 'mean', "FTP_Download_IP_Service_Access_Failure_Ratio_Method_B": 'mean',
+            "FTP_Download_IP_Service_Setup_Success_Ratio_Method_B": 'mean', "FTP_Download_IP_Service_Setup_Time_sec_Method_B": 'mean', "Seconds_Start_to_End_FTP_Upload": 'mean', "FTP_Upload_Bearer": agg_str, "FTP_Upload_Outcome": agg_str, "FTP_Upload_IP_Service_Access_Failure_Ratio_Method_A": 'mean', "FTP_Upload_IP_Service_Setup_Success_Ratio_Method_A": 'mean', "FTP_Upload_IP_Service_Setup_Time_sec_Method_A": 'mean', "FTP_Upload_Transfer_Start_Delay_Method_A": 'mean',
+            "FTP_Upload_IP_Service_Access_Failure_Ratio_Method_B": 'mean', "FTP_Upload_IP_Service_Setup_Success_Ratio_Method_B": 'mean', "FTP_Upload_IP_Service_Setup_Time_sec_Method_B": 'mean', "Seconds_Start_to_End_UDP_Download": 'mean', "UDP_Download_Error_Cause": agg_str, "Seconds_Start_to_End_UDP_Upload": 'mean', "UDP_Upload_Error_Cause": agg_str, "DNS_Client": agg_str, "DNS_Domain_Name": agg_str, "DNS_First_In_Session": agg_str, "DNS_Host_Name_Resolution_Failure_Ratio": 'mean',
+            "DNS_Host_Name_Resolution_Time_sec": 'mean', "DNS_Host_Name_Total_Resolution_Time_sec": 'mean', "DNS_Resolved_Address": agg_str, "DNS_Server_Address": agg_str}
 
         # for i in list(agg_list.keys()):
         # print(i)
@@ -128,21 +129,42 @@ if selected == "CDR Reporting":
         df_result = clear_duplicate_values_in_column(df_result, "DNS_Domain_Name")
         df_result = clear_duplicate_values_in_column(df_result, "DNS_Resolved_Address")
         df_result = clear_duplicate_values_in_column(df_result, "DNS_Server_Address")
+        df_result = clear_duplicate_values_in_column(df_result, "CombinedColumn")
+
+        df_result = df_result.rename(columns={'CombinedColumn': 'Grouping_All_URL'})
+
+        Grouping_All_Url = ["8.8.8.8", "Source Uri: https://www.youtube.com/watch?v=BQwC_DJSdfE", "URI: http://212.183.159.230/5MB.zip", "URI: http://d26kjwdsl72dzf.cloudfront.net/upload", "URI: http://press21deq5.s3.dualstack.eu-central-1.amazonaws.com/Kepler_mobile/index.html", "URI: http://press21deq5.s3.dualstack.eu-central-1.amazonaws.com/upload/", "URI: https://ash-speed.hetzner.com/1GB.bin", "URI: https://de.m.wikipedia.org/wiki/Europa", "URI: https://www.amazon.de/",
+            "URI: https://www.chip.de/", "URI: https://www.gmx.net/", "URI: https://www.google.de/", "URI: https://www.instagram.com/"]
+        Direction_Test = ["PING", "DL", "DL", "UL", "DL", "UL", "DL", "DL", "DL", "DL", "DL", "DL", "DL"]
+        Test_Name = ["PING", "Streaming YT", "FDFS HTTP DL ST", "FDTT HTTP UL MT", "Kepler", "FDFS HTTP UL ST", "FDTT HTTP DL MT", "Wikipedia", "Amazon.de", "Chip.de", "Gmx.net", "Google.de", "Instagram.com"]
+        Type_of_Test = ["PING", "Streaming YT", "FDFS DL", "FDTT UL ", "HTTP Browsing", "FDFS UL", "FDTT DL", "HTTP Browsing", "HTTP Browsing", "HTTP Browsing", "HTTP Browsing", "HTTP Browsing", "HTTP Browsing"]
+        Thread_info = ["PING", "Live 4K", "ST", "MT", "MT", "ST", "MT", "MT", "MT", "MT", "MT", "MT", "MT"]
+
+        data = {'Grouping_All_URL': Grouping_All_Url, 'Direction_Test': Direction_Test, 'Test_Name': Test_Name, 'Type_of_Test': Type_of_Test, 'Thread_info': Thread_info}
+        df_gr = pd.DataFrame(data)
+
+        merged_df = pd.merge(df_result, df_gr, on='Grouping_All_URL', how='left')
+
+        columns_to_move = ['Grouping_All_URL', 'Direction_Test', 'Test_Name', 'Type_of_Test', 'Thread_info']
+        new_positions = [3, 4, 5, 6, 7]  # 0-indexed positions
+
+        # Move each column to its new position
+        for column_name, new_position in zip(columns_to_move, new_positions):
+            column_to_move = merged_df.pop(column_name)
+            merged_df.insert(new_position, column_name, column_to_move)
 
         # Presenting results
-        df_result.to_csv('Pivot.csv', mode='w', header=True, index=False)
+        merged_df.to_csv('Agg_Results.csv', mode='w', header=True, index=False)
         # webbrowser.open("Pivot.csv")
 
-        # df_sel.to_csv('Selected_Metrics.csv', mode='w', header=True, index=False)
-        # webbrowser.open("Selected_Metrics.csv")
 
         def convert_df(df):
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv(index=False).encode('utf-8')
 
-        csv = convert_df(df_result)
-        st.download_button(label="Download Result File", data=csv, file_name="Pivot.csv", mime='text/csv')
-        st.dataframe(df_result)
+        csv = convert_df(merged_df)
+        st.download_button(label="Download Result File", data=csv, file_name="Agg_Results.csv", mime='text/csv')
+        st.dataframe(merged_df)
 
 
     st.divider()  # 👈 Draws a horizontal rule
@@ -163,9 +185,6 @@ if selected == "CDR Reporting":
         # path = "C:/08_2024_DT/HiDrive-CDR/Master Data/O2_CDR_DATA_RATINGEN_20240207/"
         # csv_file_name = path + "Metric Group 1.csv"
         df = pd.read_csv(csv_file_name, low_memory=False)
-
-
-
 
 if selected == "CDR Reports Historical Comparison":
     st.title('Comparison Module for Drive Tests')
