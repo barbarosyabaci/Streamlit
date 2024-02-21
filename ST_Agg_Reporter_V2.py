@@ -184,8 +184,10 @@ if selected == "CDR Reporting":
             # IMPORTANT: Cache the conversion to prevent computation on every rerun
             return df.to_csv(index=False).encode('utf-8')
 
+        csv_1 = convert_df(df_total_stats)
         csv = convert_df(merged_df)
-        st.download_button(label="Download Result File", data=csv, file_name="Agg_Results.csv", mime='text/csv')
+        st.download_button(label="Download Result File_statistics", data=csv_1, file_name="Agg_Stats.csv", mime='text/csv',key=4)
+        st.download_button(label="Download Result File_pivot", data=csv, file_name="Agg_Pivot.csv", mime='text/csv',key=5)
         st.dataframe(df_total_stats)
         st.dataframe(merged_df)
 
