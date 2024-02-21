@@ -85,6 +85,28 @@ if selected == "CDR Reporting":
             "Source Uri: https://www.youtube.com/watch?v=BQwC_DJSdfE": "youtube", "URI: https://www.instagram.com/": "instagram", "URI: https://www.amazon.de/": "Amazon.de", "URI: http://212.183.159.230/5MB.zip": "FDFS http DL ST", "URI: http://press21deq5.s3.dualstack.eu-central-1.amazonaws.com/upload/": "FDFS http UL ST", }
         df_sel['Test_type'] = df_sel['Test_type'].replace(my_dict)
 
+        Total_Stats = {}
+
+        FDFS_DL_Attempts = df_sel['HTTP_Outcome'].count()
+        Total_Stats.update({"FDFS_DL_Attempts": FDFS_DL_Attempts})
+        FDFS_DL_Success = len(df_sel[df_sel['HTTP_Outcome'] == 'Service Status: Succeeded'])
+        Total_Stats.update({"FDFS_DL_Success": FDFS_DL_Success})
+        FDFS_DL_Failure = len(df_sel[df_sel['HTTP_Outcome'] == 'Service Status: Failed'])
+        Total_Stats.update({"FDFS_DL_Failure": FDFS_DL_Failure})
+        FDFS_DL_Success_Ratio = "{:.2%}".format(FDFS_DL_Success / FDFS_DL_Attempts)
+        Total_Stats.update({"FDFS_DL_Success_Ratio": FDFS_DL_Success_Ratio})
+        FDFS_UL_Attempts = df_sel['HTTP_Upload_Session_Success_Ratio'].count()
+        Total_Stats.update({"FDFS_UL_Attempts": FDFS_UL_Attempts})
+        FDFS_UL_Success = len(df_sel[df_sel['HTTP_Upload_Session_Success_Ratio'] == 100])
+        Total_Stats.update({"FDFS_UL_Success": FDFS_UL_Success})
+        FDFS_UL_Failure = len(df_sel[df_sel['HTTP_Upload_Session_Success_Ratio'] == 0])
+        Total_Stats.update({"FDFS_UL_Failure": FDFS_UL_Failure})
+        FDFS_UL_Success_Ratio = "{:.2%}".format(FDFS_UL_Failure / FDFS_UL_Attempts)
+        Total_Stats.update({"FDFS_UL_Success_Ratio": FDFS_UL_Success_Ratio})
+
+        df_total_stats = pd.DataFrame(list(Total_Stats.items()), columns=['Statistic', 'Value'])
+        print(df_total_stats)
+
         agg_str = lambda x: ','.join(filter(lambda s: pd.notna(s), x))
 
         agg_list = {'CombinedColumn': agg_str, 'Serving Cell RS SINR (dB)': 'mean', 'Serving Cell RSRP (dBm)': 'mean', 'Serving Cell RSRQ (dB)': 'mean', 'HTTP_URL': agg_str, 'HTTP_Download_Average_Throughput': 'mean', 'HTTP_Download_Service_Average_Throughput': 'mean', 'HTTP_Download_Session_Failure_Ratio': 'mean', 'HTTP_Download_Session_Success_Ratio': 'mean', 'HTTP_Outcome': agg_str, "HTTP_Download_Data_Transfer_Failure_Ratio_Method_A": 'mean',
@@ -164,6 +186,7 @@ if selected == "CDR Reporting":
 
         csv = convert_df(merged_df)
         st.download_button(label="Download Result File", data=csv, file_name="Agg_Results.csv", mime='text/csv')
+        st.dataframe(df_total_stats)
         st.dataframe(merged_df)
 
 
