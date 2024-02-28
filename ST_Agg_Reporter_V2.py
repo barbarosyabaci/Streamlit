@@ -40,20 +40,27 @@ if selected == "CDR Reporting":
 
         # path = "C:/08_2024_DT/HiDrive-CDR/Master Data/O2_CDR_DATA_RATINGEN_20240207/"
         # csv_file_name = path + "Metric Group 1.csv"
+<<<<<<< HEAD
         df = pd.read_csv(csv_file_name, low_memory=False)#.head(100000)
+=======
+        df = pd.read_csv(csv_file_name, low_memory=False)# .head(100000)
+>>>>>>> e215559 (V2 st agg reporter updated)
 
         sel_columns = ["Time", "Date", "Latitude", "Longitude", "Grouping", "Grouping_with_Direction", "Grouping_with_Direction_HTTP", "Grouping_with_Direction_Ping", "Operator", "Task_Type", "Technology", "HTTP_URL", "Streaming_URL", "Ping_Address", "Serving Cell RS SINR (dB)", "Serving Cell RSRP (dBm)", "Serving Cell RSRQ (dB)", "HTTP_Download_Average_Throughput", "HTTP_Download_Service_Average_Throughput", "HTTP_Download_Session_Failure_Ratio", "HTTP_Download_Session_Success_Ratio",
             "HTTP_Outcome", "HTTP_Download_Data_Transfer_Failure_Ratio_Method_A", "HTTP_Download_Data_Transfer_Success_Ratio_Method_A", "HTTP_Download_Data_Transfer_Time_sec_Method_A", "HTTP_Download_IP_Service_Access_Failure_Ratio_Method_A", "HTTP_Download_IP_Service_Setup_Success_Ratio_Method_A", "HTTP_Download_IP_Service_Setup_Time_sec_Method_A", "HTTP_Download_Mean_Data_Rate_kbps_Method_A", "HTTP_Download_Transfer_Start_Delay_Method_A", "HTTP_Download_Data_Transfer_Failure_Ratio_Method_B",
             "HTTP_Download_Data_Transfer_Success_Ratio_Method_B", "HTTP_Download_Data_Transfer_Time_sec_Method_B", "HTTP_Download_IP_Service_Access_Failure_Ratio_Method_B", "HTTP_Download_IP_Service_Setup_Success_Ratio_Method_B", "HTTP_Download_IP_Service_Setup_Time_sec_Method_B", "HTTP_Download_Mean_Data_Rate_kbps_Method_B", "HTTP_Upload_Average_Throughput", "HTTP_Upload_Service_Average_Throughput", "HTTP_Upload_Service_Transfer_Time", "HTTP_Upload_Session_Failure_Ratio",
-            "HTTP_Upload_Session_Success_Ratio", "HTTP_Upload_Data_Transfer_Failure_Ratio_Method_A", "HTTP_Upload_Data_Transfer_Success_Ratio_Method_A", "HTTP_Upload_Data_Transfer_Time_sec_Method_A", "HTTP_Upload_IP_Service_Access_Failure_Ratio_Method_A", "HTTP_Upload_IP_Service_Setup_Success_Ratio_Method_A", "HTTP_Upload_IP_Service_Setup_Time_sec_Method_A", "HTTP_Upload_Mean_Data_Rate_kbps_Method_A", "Streaming_Outcome_Type", "Aborted_by_User", "Streaming_Average_Session_Resolution",
-            "Streaming_Average_Throughput", "Streaming_Completion_Rate", "Streaming_Duration", "Streaming_HD_Resolution", "Streaming_HD_Resolution_Ratio", "Streaming_Impairment_Free", "Streaming_Impairment_Free_Video_Session_Ratio", "Streaming_Maximum_Duration_Of_Video_Session_Interruptions", "Streaming_Number_Of_Video_Session_Interruptions", "Streaming_Player_Size_kB", "Streaming_Reproduction_Cutoff_Ratio", "Streaming_Reproduction_Start_Delay_sec", "Streaming_Reproduction_Start_Failure_Ratio",
-            "Streaming_Service_Access_Time_ms", "Streaming_Service_Access_Time_sec", "Streaming_Session_Failure_Ratio", "Streaming_Session_Qualified", "Streaming_Session_Qualified_Ratio", "Streaming_Session_Video_Interruption_Duration", "Streaming_Session_Without_Interruption_Rate", "Streaming_Setup_Success_Rate", "Streaming_State_Prebuffering_to_Reproducing_Delay", "Streaming_State_Request_to_Prebuffering_Delay", "Streaming_State_Request_to_Reproducing_Delay", "Streaming_Success_Rate",
-            "Streaming_Throughput_Filtered", "Streaming_Total_Duration_Of_Video_Session_Interruptions", "Streaming_Video_Buffer_Size_kB", "Streaming_Video_IP_Service_Access_Time_ms", "Streaming_Video_IP_Service_Access_Time_sec", "Streaming_Video_Play_Start_Failure_Ratio", "Streaming_Video_Play_Start_Time_sec", "Streaming_Video_Session_Cutoff_Ratio", "Streaming_Video_Session_Failure_Ratio", "Streaming_Video_Session_Success_Ratio", "Streaming_Video_Session_Time_sec", "Streaming_Video_Size_kB",
+            "HTTP_Upload_Session_Success_Ratio", "HTTP_Upload_Data_Transfer_Failure_Ratio_Method_A", "HTTP_Upload_Data_Transfer_Success_Ratio_Method_A", "HTTP_Upload_Data_Transfer_Time_sec_Method_A", "HTTP_Upload_IP_Service_Access_Failure_Ratio_Method_A", "HTTP_Upload_IP_Service_Setup_Success_Ratio_Method_A", "HTTP_Upload_IP_Service_Setup_Time_sec_Method_A", "HTTP_Upload_Mean_Data_Rate_kbps_Method_A", "HTTP Transfer Time (second)", "Streaming_Outcome_Type", "Aborted_by_User",
+            "Streaming_Average_Session_Resolution", "Streaming_Average_Throughput", "Streaming_Completion_Rate", "Streaming_Duration", "Streaming_HD_Resolution", "Streaming_HD_Resolution_Ratio", "Streaming_Impairment_Free", "Streaming_Impairment_Free_Video_Session_Ratio", "Streaming_Maximum_Duration_Of_Video_Session_Interruptions", "Streaming_Number_Of_Video_Session_Interruptions", "Streaming_Player_Size_kB", "Streaming_Reproduction_Cutoff_Ratio", "Streaming_Reproduction_Start_Delay_sec",
+            "Streaming_Reproduction_Start_Failure_Ratio", "Streaming_Service_Access_Time_ms", "Streaming_Service_Access_Time_sec", "Streaming_Session_Failure_Ratio", "Streaming_Session_Qualified", "Streaming_Session_Qualified_Ratio", "Streaming_Session_Video_Interruption_Duration", "Streaming_Session_Without_Interruption_Rate", "Streaming_Setup_Success_Rate", "Streaming_State_Prebuffering_to_Reproducing_Delay", "Streaming_State_Request_to_Prebuffering_Delay",
+            "Streaming_State_Request_to_Reproducing_Delay", "Streaming_Success_Rate", "Streaming_Throughput_Filtered", "Streaming_Total_Duration_Of_Video_Session_Interruptions", "Streaming_Video_Buffer_Size_kB", "Streaming_Video_IP_Service_Access_Time_ms", "Streaming_Video_IP_Service_Access_Time_sec", "Streaming_Video_Play_Start_Failure_Ratio", "Streaming_Video_Play_Start_Time_sec", "Streaming_Video_Session_Cutoff_Ratio", "Streaming_Video_Session_Failure_Ratio",
+            "Streaming_Video_Session_Success_Ratio", "Streaming_Video_Session_Time_sec", "Streaming_Video_Size_kB", # "Streaming_Impairment_Free",
+            # "Streaming_Reproduction_Cutoff_Ratio",
             "SessionTime", "SessionTime_Upload", "ThroughputCountOver1MBit", "ThroughputCountOver3MBit", "ThroughputPercentageOver3MBit", "TCP_Handshake_Time_sec", "Ping_Count_Attempts", "Ping_Count_Failed", "Ping_Count_Success", "Ping_Delay_ms_Avg", "Ping_Delay_ms_Max", "Ping_Delay_ms_Min", "Ping_Packet_Loss_Rate", "Ping_Packet_Success_Rate", "Ping_Roundtrip_Time_ms", "Ping_Roundtrip_Time_sec", "Ping_Size", "Data_Radio_Bearer", "Fixed_Duration", "IP_Interruption_Time_ms", "Is_Multi_RAB",
             "LTE_Serving_Cell_Count_Average", "Radio_Access_Technology", "Service_Bearer", "FTP_Download_Average_Throughput_Not_Completed_Session", "FTP_Download_Bearer", "FTP_Download_Error_Cause", "FTP_Download_Outcome", "FTP_Download_Session_Failure_Ratio", "FTP_Download_Session_Success_Ratio", "FTP_Server_File", "Seconds_Start_to_End_FTP_Download", "FTP_Download_Data_Transfer_Cutoff_Ratio_Method_A", "FTP_Download_Data_Transfer_Success_Ratio_Method_A",
             "FTP_Download_IP_Service_Access_Failure_Ratio_Method_A", "FTP_Download_IP_Service_Setup_Success_Ratio_Method_A", "FTP_Download_IP_Service_Setup_Time_sec_Method_A", "FTP_Download_Transfer_Start_Delay_Method_A", "FTP_Download_Data_Transfer_Cutoff_Ratio_Method_B", "FTP_Download_Data_Transfer_Success_Ratio_Method_B", "FTP_Download_IP_Service_Access_Failure_Ratio_Method_B", "FTP_Download_IP_Service_Setup_Success_Ratio_Method_B", "FTP_Download_IP_Service_Setup_Time_sec_Method_B",
             "Seconds_Start_to_End_FTP_Upload", "FTP_Upload_Bearer", "FTP_Upload_Outcome", "FTP_Upload_IP_Service_Access_Failure_Ratio_Method_A", "FTP_Upload_IP_Service_Setup_Success_Ratio_Method_A", "FTP_Upload_IP_Service_Setup_Time_sec_Method_A", "FTP_Upload_Transfer_Start_Delay_Method_A", "FTP_Upload_IP_Service_Access_Failure_Ratio_Method_B", "FTP_Upload_IP_Service_Setup_Success_Ratio_Method_B", "FTP_Upload_IP_Service_Setup_Time_sec_Method_B", "Seconds_Start_to_End_UDP_Download",
             "UDP_Download_Error_Cause", "Seconds_Start_to_End_UDP_Upload", "UDP_Upload_Error_Cause", "DNS_Client", "DNS_Domain_Name", "DNS_First_In_Session", "DNS_Host_Name_Resolution_Failure_Ratio", "DNS_Host_Name_Resolution_Time_sec", "DNS_Host_Name_Total_Resolution_Time_sec", "DNS_Resolved_Address", "DNS_Server_Address"]
+
         # for i in sel_columns:
         # print(i)
 
@@ -85,10 +92,11 @@ if selected == "CDR Reporting":
             "Source Uri: https://www.youtube.com/watch?v=BQwC_DJSdfE": "youtube", "URI: https://www.instagram.com/": "instagram", "URI: https://www.amazon.de/": "Amazon.de", "URI: http://212.183.159.230/5MB.zip": "FDFS http DL ST", "URI: http://press21deq5.s3.dualstack.eu-central-1.amazonaws.com/upload/": "FDFS http UL ST", }
         df_sel['Test_type'] = df_sel['Test_type'].replace(my_dict)
 
-        Total_Stats = {}
+        # region calculating general statistics
 
+        Total_Stats = {}
         FDFS_DL_Attempts = df_sel['HTTP_Outcome'].count()
-        Total_Stats.update({"FDFS_DL_Attempts": FDFS_DL_Attempts})
+        Total_Stats.update({"FDFS_DL_Attempts": df_sel['HTTP_Outcome'].count()})
         FDFS_DL_Success = len(df_sel[df_sel['HTTP_Outcome'] == 'Service Status: Succeeded'])
         Total_Stats.update({"FDFS_DL_Success": FDFS_DL_Success})
         FDFS_DL_Failure = len(df_sel[df_sel['HTTP_Outcome'] == 'Service Status: Failed'])
@@ -101,11 +109,66 @@ if selected == "CDR Reporting":
         Total_Stats.update({"FDFS_UL_Success": FDFS_UL_Success})
         FDFS_UL_Failure = len(df_sel[df_sel['HTTP_Upload_Session_Success_Ratio'] == 0])
         Total_Stats.update({"FDFS_UL_Failure": FDFS_UL_Failure})
-        FDFS_UL_Success_Ratio = "{:.2%}".format(FDFS_UL_Failure / FDFS_UL_Attempts)
+        FDFS_UL_Success_Ratio = "{:.2%}".format(FDFS_UL_Success / FDFS_UL_Attempts)
         Total_Stats.update({"FDFS_UL_Success_Ratio": FDFS_UL_Success_Ratio})
 
+        HTTP_Browsing_Attempts = df_sel['HTTP_Download_Session_Success_Ratio'].count()
+        Total_Stats.update({'HTTP_Browsing_Attempts': HTTP_Browsing_Attempts})
+        HTTP_Browsing_Access_Failure = len(df_sel[df_sel['HTTP_Download_Session_Success_Ratio'] == 0])
+        Total_Stats.update({'HTTP_Browsing_Access_Failure': HTTP_Browsing_Access_Failure})
+        HTTP_Browsing_Access_Success = len(df_sel[df_sel['HTTP_Download_Session_Success_Ratio'] == 100])
+        Total_Stats.update({'HTTP_Browsing_Access_Success': HTTP_Browsing_Access_Success})
+        HTTP_Browsing_Access_Success_Ratio = "{:.2%}".format(FDFS_DL_Success / FDFS_DL_Attempts)
+        Total_Stats.update({'HTTP_Browsing_Access_Success': HTTP_Browsing_Access_Success})
+        HTTP_Browsing_Min_Transfer_Time_s = df_sel["HTTP Transfer Time (second)"].min()
+        Total_Stats.update({'HTTP_Browsing_Min_Transfer_Time_s': HTTP_Browsing_Min_Transfer_Time_s})
+        HTTP_Browsing_10_PCTL_Transfer_Time_s = HTTP_Browsing_Min_Transfer_Time_s = df_sel["HTTP Transfer Time (second)"].quantile(0.01)
+        Total_Stats.update({'HTTP_Browsing_10_PCTL_Transfer_Time_s': HTTP_Browsing_10_PCTL_Transfer_Time_s})
+        HTTP_Browsing_Average_Transfer_Time_s = df_sel["HTTP Transfer Time (second)"].mean()
+        Total_Stats.update({'HTTP_Browsing_Average_Transfer_Time_s': HTTP_Browsing_Average_Transfer_Time_s})
+        HTTP_Browsing_Median_Transfer_Time_s = df_sel["HTTP Transfer Time (second)"].median()
+        Total_Stats.update({'HTTP_Browsing_Median_Transfer_Time_s': HTTP_Browsing_Median_Transfer_Time_s})
+        HTTP_Browsing_90_PCTL_Transfer_Time_s = df_sel["HTTP Transfer Time (second)"].quantile(0.9)
+        Total_Stats.update({'HTTP_Browsing_90_PCTL_Transfer_Time_s': HTTP_Browsing_90_PCTL_Transfer_Time_s})
+        HTTP_Browsing_Max_Transfer_Time_s = df_sel["HTTP Transfer Time (second)"].max()
+        Total_Stats.update({'HTTP_Browsing_Max_Transfer_Time_s': HTTP_Browsing_Max_Transfer_Time_s})
+
+        Video_Stream_Attempts = df_sel['Streaming_Session_Failure_Ratio'].count()
+        Video_Stream_Failures = len(df_sel[df_sel['Streaming_Session_Failure_Ratio'] == 0])
+        Video_Stream_Access_Time_sec = df_sel["Streaming_Service_Access_Time_sec"].mean()
+        Video_Stream_Success_Ratio_PC = len(df_sel[df_sel['Streaming_Session_Failure_Ratio'] == 100])
+        Video_Stream_Reproduction_Start_Delay_sec = df_sel["Streaming_State_Request_to_Prebuffering_Delay"].mean()
+        Initial_Latency_Time_sec_Streaming_State_Request_to_Prebuffering_Delay = df_sel["Streaming_State_Request_to_Reproducing_Delay"].mean()
+        # Streaming_Impairment_Free = df_sel["Streaming_Impairment_Free"].mean()
+        Streaming_Reproduction_Cut_off_Ratio = df_sel[("Streaming_Reproduction_Cutoff_Ratio")].mean()
+        Streaming_Session_Without_Interruption_Rate_PC = df_sel["Streaming_Session_Without_Interruption_Rate"].mean()
+        Streaming_Aggregated_Average_Session_Resolution_p = df_sel["Streaming_Average_Session_Resolution"].mean()
+        Ping_Attempt = df_sel['Ping_Count_Attempts'].count()
+        Ping_Success = len(df_sel[df_sel['Ping_Count_Success'] == 10])
+        Ping_Failures = len(df_sel[df_sel['Ping_Count_Failed'] == 10])
+        Ping_Success_rate = "{:.2%}".format(Ping_Success / Ping_Attempt)
+        Ping_RTT_ms = df_sel["Ping_Roundtrip_Time_ms"].mean()
+        Ping_Trace_Loss_PC = df_sel["Ping_Packet_Loss_Rate"].mean()
+
+        Total_Stats.update({'Video_Stream_Attempts': Video_Stream_Attempts})
+        Total_Stats.update({'Video_Stream_Failures': Video_Stream_Failures})
+        Total_Stats.update({'Video_Stream_Access_Time_sec': Video_Stream_Access_Time_sec})
+        Total_Stats.update({'Video_Stream_Success_Ratio_PC': Video_Stream_Success_Ratio_PC})
+        Total_Stats.update({'Video_Stream_Reproduction_Start_Delay_sec': Video_Stream_Reproduction_Start_Delay_sec})
+        Total_Stats.update({'Initial_Latency_Time_sec_Streaming_State_Request_to_Prebuffering_Delay': Initial_Latency_Time_sec_Streaming_State_Request_to_Prebuffering_Delay})
+        # Total_Stats.update({'Streaming_Impairment_Free_Ratio_PC':Streaming_Impairment_Free})
+        Total_Stats.update({'Streaming_Reproduction_Cut-off_Ratio': Streaming_Reproduction_Cut_off_Ratio})
+        Total_Stats.update({'Streaming_Session_Without_Interruption_Rate_PC': Streaming_Session_Without_Interruption_Rate_PC})
+        Total_Stats.update({'Streaming_Aggregated_Average_Session_Resolution_p': Streaming_Aggregated_Average_Session_Resolution_p})
+        Total_Stats.update({'Ping_Attempt': Ping_Attempt})
+        Total_Stats.update({'Ping_Success': Ping_Success})
+        Total_Stats.update({'Ping_Failures': Ping_Failures})
+        Total_Stats.update({'Ping_Success_rate': Ping_Success_rate})
+
         df_total_stats = pd.DataFrame(list(Total_Stats.items()), columns=['Statistic', 'Value'])
-        print(df_total_stats)
+        # print(df_total_stats)
+
+        # endregion
 
         agg_str = lambda x: ','.join(filter(lambda s: pd.notna(s), x))
 
@@ -225,3 +288,57 @@ if selected == "View on Map":
     st.title('Map Module for Historical Drive Tests')
     st.header('Historical Reports Map viewing Module')
     st.write("This module is a demo for CDR Reports Map Vieving ")
+
+
+
+    uploaded_file = st.file_uploader("Choose input zip file to process", type="zip", accept_multiple_files=True)
+
+    if st.button('Process uploaded files'):
+        import pandas as pd
+        import pydeck as pdk
+        import zipfile
+
+        with zipfile.ZipFile(uploaded_file[0], 'r') as zip_ref:
+            csv_file_name = zip_ref.namelist()[0]
+            zip_ref.extract(csv_file_name)
+
+
+        df = pd.read_csv(csv_file_name, low_memory=False)
+
+        sel_columns = ["Time", "Date", "Latitude", "Longitude", "Grouping", "Grouping_with_Direction", "Grouping_with_Direction_HTTP", "Grouping_with_Direction_Ping", "Operator", "Task_Type", "Technology", "HTTP_URL", "Streaming_URL", "Ping_Address", "Serving Cell RS SINR (dB)", "Serving Cell RSRP (dBm)", "Serving Cell RSRQ (dB)", "HTTP_Download_Average_Throughput", "HTTP_Download_Service_Average_Throughput", "HTTP_Download_Session_Failure_Ratio", "HTTP_Download_Session_Success_Ratio",
+            "HTTP_Outcome", "HTTP_Download_Data_Transfer_Failure_Ratio_Method_A", "HTTP_Download_Data_Transfer_Success_Ratio_Method_A", "HTTP_Download_Data_Transfer_Time_sec_Method_A", "HTTP_Download_IP_Service_Access_Failure_Ratio_Method_A", "HTTP_Download_IP_Service_Setup_Success_Ratio_Method_A", "HTTP_Download_IP_Service_Setup_Time_sec_Method_A", "HTTP_Download_Mean_Data_Rate_kbps_Method_A", "HTTP_Download_Transfer_Start_Delay_Method_A", "HTTP_Download_Data_Transfer_Failure_Ratio_Method_B",
+            "HTTP_Download_Data_Transfer_Success_Ratio_Method_B", "HTTP_Download_Data_Transfer_Time_sec_Method_B", "HTTP_Download_IP_Service_Access_Failure_Ratio_Method_B", "HTTP_Download_IP_Service_Setup_Success_Ratio_Method_B", "HTTP_Download_IP_Service_Setup_Time_sec_Method_B", "HTTP_Download_Mean_Data_Rate_kbps_Method_B", "HTTP_Upload_Average_Throughput", "HTTP_Upload_Service_Average_Throughput", "HTTP_Upload_Service_Transfer_Time", "HTTP_Upload_Session_Failure_Ratio",
+            "HTTP_Upload_Session_Success_Ratio", "HTTP_Upload_Data_Transfer_Failure_Ratio_Method_A"]
+
+        # for i in sel_columns:
+        # print(i)
+
+        df_sel = df[sel_columns]
+
+        # st.write(df_sel.columns)
+
+        lon_cen_1 = df_sel["Longitude"].mean()
+        lat_cen_1 = df_sel["Latitude"].mean()
+
+        view_state = pdk.ViewState(latitude=lat_cen_1, longitude=lon_cen_1, zoom=10)
+
+        st.pydeck_chart(pdk.Deck(map_style=None, initial_view_state=view_state,
+            layers=[
+            pdk.Layer('ScatterplotLayer',
+                data=df_sel,
+                get_position='[Longitude, Latitude]',
+                get_color='[200, 30, 0, 160]',
+                pickable=True,
+                tooltip=True,
+                radiusScale=2,
+                radiusMinPixels=2,
+                radiusMaxPixels=2) # get_radius=50,
+            ],
+            # tooltip={"Name: {name}"}
+            tooltip={"text": "HTTP_Download_Service_Average_Throughput: {HTTP_Download_Service_Average_Throughput}"}
+        ))
+
+
+
+
+
