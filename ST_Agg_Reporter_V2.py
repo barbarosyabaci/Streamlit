@@ -288,14 +288,14 @@ if selected == "View on Map":
 
 
 
-    uploaded_file = st.file_uploader("Choose input zip file to process", type="zip", accept_multiple_files=True)
+    uploaded_file_2 = st.file_uploader("Choose input zip file to process", type="zip", accept_multiple_files=True)
 
     if st.button('Process uploaded files'):
         import pandas as pd
         import pydeck as pdk
         import zipfile
 
-        with zipfile.ZipFile(uploaded_file[0], 'r') as zip_ref:
+        with zipfile.ZipFile(uploaded_file_2[0], 'r') as zip_ref:
             csv_file_name = zip_ref.namelist()[0]
             zip_ref.extract(csv_file_name)
 
