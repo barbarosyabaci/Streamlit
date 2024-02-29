@@ -335,7 +335,3 @@ if selected == "View on Map":
             tooltip={"text": "HTTP_Download_Service_Average_Throughput: {HTTP_Download_Service_Average_Throughput}"}
         ))
 
-
-
-
-
