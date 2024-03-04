@@ -9,3 +9,4 @@ geopandas == 0.12.1
 geopy == 2.3.0
 haversine == 2.8.1
 openpyxl == 3.0.7
+xlsxwriter == 3.0.1
