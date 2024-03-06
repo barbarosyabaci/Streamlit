@@ -590,4 +590,13 @@ def excel_report(df_total_stats, merged_df):
     # Save the changes to the Excel file
     wb.save(excel_file)
     print(f'Excel file "{excel_file}" created and styled successfully.')
-    return None
+    return df2
+
+def add_dataframe_excel(input_file,output_file,sheet_name,df):
+    import openpyxl
+    import pandas as pd
+    workbook = openpyxl.load_workbook(input_file)
+    worksheet = workbook[sheet_name]
+    for row in df.iterrows():
+        worksheet.append(row[1].tolist())
+    workbook.save(output_file)

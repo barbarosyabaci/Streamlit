@@ -37,11 +37,13 @@ if selected == "CDR Reporting":
         df_sel = cdrf.add_distances(df_sel)
         df_result = cdrf.Calculating_pivot(df_sel)
         merged_df = cdrf.merge_type_table(df_result)
-        cdrf.excel_report(df_total_stats, merged_df)
+        df_Vdf = cdrf.excel_report(df_total_stats, merged_df)
+        cdrf.add_dataframe_excel('template_cdr.xlsx', 'output_file_2.xlsx', 'Vodafone', df_Vdf)
 
         merged_df.to_csv('Pivot.csv', mode='w', header=True, index=False)
         st.download_button(label="Download Pivot", key=5, data=open('Pivot.csv', 'rb').read(), file_name="Pivot.csv")
         st.download_button(label="Download Excel_report", key=6, data=open('output_file.xlsx', 'rb').read(), file_name='output_file.xlsx')
+        st.download_button(label="Download CDR_report_V1", key=7, data=open('output_file_2.xlsx', 'rb').read(), file_name='CDR_V1.xlsx')
         st.dataframe(merged_df)
 
     st.divider()  # 👈 Draws a horizontal rule
