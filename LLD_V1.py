@@ -8,11 +8,11 @@ with st.sidebar:
              "If you need any tailor made software with similar data processing features please contact us.  \n"
              "  \n"
              "")
-    selected = option_menu("RAN Modules",[
-        "CDR Reporting",
-        "CDR Reports Historical Comparison",
-        "View Historical Reports",
-        "View on Map",
+    selected = option_menu("LLD Modules",[
+        "LLD Documentation",
+        "LLD Database Model",
+        "LLD Database Update",
+        "LLD Database Reports",
         # "path layer"
         ], menu_icon="cast", default_index=0)
 
