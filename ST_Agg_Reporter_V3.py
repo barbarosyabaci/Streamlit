@@ -17,7 +17,7 @@ with st.sidebar:
         ], menu_icon="cast", default_index=0)
 
 if selected == "CDR Reporting":
-    import pandas as pd, zipfile,CDR_functions as cdrf
+    import pandas as pd, zipfile,CDR_functions_old as cdrf
 
     st.title('CDR Reporting')
     st.header('Drive Test Statistical Report Module - Data')
