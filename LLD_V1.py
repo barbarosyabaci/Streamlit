@@ -12,7 +12,7 @@ with st.sidebar:
         "LLD Documentation",
         "LLD Database Model",
         "LLD Database Update",
-        "LLD Database Reports",
+        "LLD Database Reports", "LLD Documentation", "LLD Database Model", "LLD Database Update", "LLD Database Reports"
         # "path layer"
         ], menu_icon="cast", default_index=0)
 
