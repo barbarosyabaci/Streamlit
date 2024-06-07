@@ -91,8 +91,8 @@ if selected == "LLD Database Model":
             if isinstance(d, dict):
                 for key, value in d.items():
                     if isinstance(value, dict):
-                        st.markdown(f"### {key}")
-                        display_dict(value, level + 1)
+                        with st.expander(f"**{key}**"):
+                            display_dict(value, level + 1)
                     else:
                         st.write(f"**{key}:** {value}")
             else:
