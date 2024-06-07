@@ -49,80 +49,9 @@ if selected == "LLD Database Model":
     TI_numbers_list = df_1["TI_Number"].to_list()
     TI_Number_to_display = st.selectbox('Please Select The TI Number', TI_numbers_list)
 
-    document = collection.find_one({"TI_Number": "TI-20220307"})
-
     if st.button("Display TI Number information"):
         document = collection.find_one({"TI_Number": TI_Number_to_display})
-    def display_dict_1(d, level=0):
-            if isinstance(d, dict):
-                if d:
-                    tabs = st.tabs(list(d.keys()))
-                    for key, value in d.items():
-                        with tabs[list(d.keys()).index(key)]:
-                            st.write(f"**{key}:**")
-                            if isinstance(value, dict):
-                                display_dict(value, level + 1)
-                            else:
-                                st.write(value)
-                else:
-                    st.write("Empty dictionary")
-            else:
-                st.write(d)
-    def display_dict_2(d, level=0):
-            if isinstance(d, dict):
-                if d:
-                    for key, value in d.items():
-                        st.write(f"**{key}:**")
-                        if isinstance(value, dict):
-                            display_dict(value, level + 1)
-                        else:
-                            st.write(value)
-                else:
-                    st.write("Empty dictionary")
-            else:
-                st.write(d)
-    def display_dict_3(d, level=0):
-            if isinstance(d, dict):
-                for key, value in d.items():
-                    st.markdown(f"### {key}")
-                    if isinstance(value, dict):
-                        if st.checkbox(f"Expand {key}", False):
-                            display_dict(value, level + 1)
-                    else:
-                        st.write(f"**{key}:** {value}")
-            else:
-                st.write(d)
-    def display_dict(d, level=0):
-            if isinstance(d, dict):
-                for key, value in d.items():
-                    expander_key = f"{level}_{key}"
-                    if st.checkbox(f"{key}", key=expander_key):
-                        st.markdown(f"### {key}")
-                        if isinstance(value, dict):
-                            display_dict(value, level + 1)
-                        else:
-                            st.write(f"**{key}:** {value}")
-            else:
-                st.write(d)
-    def display_dict_5(d, level=0):
-        if isinstance(d, dict):
-            for key, value in d.items():
-                expander_key = f"{level}_{key}"
-                if st.button(f"Toggle {key}", key=expander_key):
-                    if expander_key in st.session_state:
-                        del st.session_state[expander_key]
-                    else:
-                        st.session_state[expander_key] = True
-                if expander_key in st.session_state:
-                    st.markdown(f"### {key}")
-                    if isinstance(value, dict):
-                        display_dict(value, level + 1)
-                    else:
-                        st.write(f"**{key}:** {value}")
-        else:
-            st.write(d)
-
-    display_dict(document)
+        st.write(document)
 
 
 
