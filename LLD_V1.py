@@ -47,9 +47,13 @@ if selected == "LLD Database Model":
     df_1 = pd.DataFrame(list(all_data_from_db)) # st.write(df_tokyo_mongodb)
 
     TI_numbers_list = df_1["TI_Number"].to_list()
-    option = st.selectbox('Please Select The TI Number', TI_numbers_list)
+    TI_Number_to_display = st.selectbox('Please Select The TI Number', TI_numbers_list)
 
-    st.table(df_1["TI_Number"].head(20))
+    if st.button("Display TI Number information"):
+        document = collection.find_one({{"TI_Number": TI_Number_to_display}})
+        st.table(document)
+        st.write(document)
+    # st.table(df_1["TI_Number"].head(20))
 
 
 
