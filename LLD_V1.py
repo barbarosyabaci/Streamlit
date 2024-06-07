@@ -72,6 +72,7 @@ if selected == "LLD Database Model":
             else:
                 st.write(d)
 
+        st.divider()
         def display_dict(d, level=0):
             if isinstance(d, dict):
                 if d:
