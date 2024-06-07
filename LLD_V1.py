@@ -53,7 +53,7 @@ if selected == "LLD Database Model":
         document = collection.find_one({"TI_Number": TI_Number_to_display}).values()
         #vdocument = collection.find_one({"TI_Number": TI_Number_to_display})
         # st.table(document)
-        # st.write(type(document))
+        st.write(type(document))
         # st.write(document)
 
         def display_dict(d, level=0):
@@ -70,7 +70,7 @@ if selected == "LLD Database Model":
                 st.write(d)
 
         # display_dict(document)
-        display_dict(document)
+        # display_dict(document)
 
 if selected == "CDR Reporting":
     import pandas as pd, zipfile,CDR_functions_old as cdrf
