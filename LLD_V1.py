@@ -12,9 +12,20 @@ with st.sidebar:
         "LLD Documentation",
         "LLD Database Model",
         "LLD Database Update",
-        "LLD Database Reports", "LLD Documentation", "LLD Database Model", "LLD Database Update", "LLD Database Reports"
+        "LLD Database Reports"
         # "path layer"
         ], menu_icon="cast", default_index=0)
+
+if selected == "LLD Database Model":
+    import pandas as pd, zipfile,CDR_functions_old as cdrf
+
+    st.title('LLD Database Model')
+    st.header('TI Number REporting')
+    st.write("This module is a demo for CDR Statistical Reporting. ")
+
+    st.divider()  # 👈 Draws a horizontal rule
+    st.header('LLD Details')
+
 
 if selected == "CDR Reporting":
     import pandas as pd, zipfile,CDR_functions_old as cdrf
