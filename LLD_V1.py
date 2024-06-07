@@ -46,6 +46,9 @@ if selected == "LLD Database Model":
     all_data_from_db = db[collection_name].find({})
     df_1 = pd.DataFrame(list(all_data_from_db)) # st.write(df_tokyo_mongodb)
 
+    TI_numbers_list = df_1["TI_Number"].to_list()
+    option = st.selectbox('Please Select The TI Number', TI_numbers_list)
+
     st.table(df_1["TI_Number"].head(20))
 
 
