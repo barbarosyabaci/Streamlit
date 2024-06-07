@@ -67,6 +67,7 @@ if selected == "LLD Database Model":
                         else:
                             st.write(value)
             else:
+                st.write("no way")
                 st.write(d)
 
         # display_dict(document)
