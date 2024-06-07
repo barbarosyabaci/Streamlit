@@ -52,7 +52,7 @@ if selected == "LLD Database Model":
     if st.button("Display TI Number information"):
         document = collection.find_one({"TI_Number": TI_Number_to_display}).values()
         # st.table(document)
-        st.write(type(document))
+        st.write(document)
 
 
 if selected == "CDR Reporting":
