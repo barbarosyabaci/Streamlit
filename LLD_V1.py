@@ -86,12 +86,12 @@ if selected == "LLD Database Model":
             else:
                 st.write(d)
 
-        def display_dict_3(d, level=0):
+        def display_dict(d, level=0):
             if isinstance(d, dict):
                 if d:
                     for key, value in d.items():
                         if isinstance(value, dict):
-                            expander = st.beta_expander(f"**{key}:**")
+                            expander = st.expander(f"**{key}:**")
                             with expander:
                                 display_dict(value, level + 1)
                         else:
@@ -102,7 +102,7 @@ if selected == "LLD Database Model":
                 st.write(d)
 
         # display_dict(document)
-        display_dict_3(document)
+        display_dict(document)
 
         # display_dict(document)
 
