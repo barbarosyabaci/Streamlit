@@ -86,18 +86,15 @@ if selected == "LLD Database Model":
             else:
                 st.write(d)
 
+
         def display_dict(d, level=0):
             if isinstance(d, dict):
-                if d:
-                    for key, value in d.items():
-                        if isinstance(value, dict):
-                            expander = st.expander(f"**{key}:**")
-                            with expander:
-                                display_dict(value, level + 1)
-                        else:
-                            st.write(f"**{key}:** {value}")
-                else:
-                    st.write("Empty dictionary")
+                for key, value in d.items():
+                    if isinstance(value, dict):
+                        st.markdown(f"### {key}")
+                        display_dict(value, level + 1)
+                    else:
+                        st.write(f"**{key}:** {value}")
             else:
                 st.write(d)
 
