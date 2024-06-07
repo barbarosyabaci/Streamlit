@@ -52,12 +52,7 @@ if selected == "LLD Database Model":
     document = []
 
     if st.button("Display TI Number information"):
-        # document = collection.find_one({"TI_Number": TI_Number_to_display}).values()
         document = collection.find_one({"TI_Number": TI_Number_to_display})
-        # st.table(document)
-        # st.write(type(document))
-        # st.write(document)
-
     def display_dict_1(d, level=0):
             if isinstance(d, dict):
                 if d:
