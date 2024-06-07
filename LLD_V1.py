@@ -8,7 +8,8 @@ with st.sidebar:
              "If you need any tailor made software with similar data processing features please contact us.  \n"
              "  \n"
              "")
-    selected = option_menu("LLD Modules",[
+    selected = option_menu(
+        "LLD Modules",[
         "LLD Documentation",
         "LLD Database Model",
         "LLD Database Update",
@@ -18,13 +19,35 @@ with st.sidebar:
 
 if selected == "LLD Database Model":
     import pandas as pd, zipfile,CDR_functions_old as cdrf
+    import pandas as pd
+    import numpy as np
+    from pymongo.mongo_client import MongoClient
+    from pymongo.server_api import ServerApi
+    import pydeck as pdk
+    import json
+
+    Name = "Barbaros"
 
     st.title('LLD Database Model')
-    st.header('TI Number REporting')
+    st.header('TI Number Reporting')
     st.write("This module is a demo for CDR Statistical Reporting. ")
 
     st.divider()  # 👈 Draws a horizontal rule
     st.header('LLD Details')
+
+    db_name_read = "JSON_test"  # st.text_input('dB name to read')
+    collection_name = "TI_Numbers"
+
+    uri = "mongodb+srv://barbarosyabaci:IxZzHfcoVPQShAGZ@cluster0.nor6m32.mongodb.net/?retryWrites=true&w=majority"
+    cluster = MongoClient(uri, server_api=ServerApi('1'))
+    db = cluster[db_name_read]
+    collection = db[collection_name]
+
+    all_data_from_db = db[collection_name].find({})
+    df_1 = pd.DataFrame(list(all_data_from_db)) # st.write(df_tokyo_mongodb)
+
+    st.table(df_1.head(20))
+
 
 
 if selected == "CDR Reporting":
