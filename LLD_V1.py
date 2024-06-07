@@ -50,23 +50,27 @@ if selected == "LLD Database Model":
     TI_Number_to_display = st.selectbox('Please Select The TI Number', TI_numbers_list)
 
     if st.button("Display TI Number information"):
-        document = collection.find_one({"TI_Number": TI_Number_to_display}).values()
+        # document = collection.find_one({"TI_Number": TI_Number_to_display}).values()
+        document = collection.find_one({"TI_Number": TI_Number_to_display})
         # st.table(document)
         st.write(type(document))
         st.write(document)
+
         def display_dict(d, level=0):
-            # Create tabs for each key at the current level
-            tabs = st.tabs(list(d.keys()))
-            for key, value in d.items():
-                with tabs[list(d.keys()).index(key)]:
-                    st.write(f"**{key}:**")
-                    if isinstance(value, dict):
-                        # Recursively display nested dictionaries
-                        display_dict(value, level + 1)
-                    else:
-                        st.write(value)
+            if isinstance(d, dict):
+                tabs = st.tabs(list(d.keys()))
+                for key, value in d.items():
+                    with tabs[list(d.keys()).index(key)]:
+                        st.write(f"**{key}:**")
+                        if isinstance(value, dict):
+                            display_dict(value, level + 1)
+                        else:
+                            st.write(value)
+            else:
+                st.write(d)
 
         # display_dict(document)
+        display_dict(document.values())
 
 if selected == "CDR Reporting":
     import pandas as pd, zipfile,CDR_functions_old as cdrf
