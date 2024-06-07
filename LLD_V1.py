@@ -2,10 +2,10 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 with st.sidebar:
-    st.write("This is a demo software program with some demo modules. "
-             "The purpose of the demo is to show the data processing capability of our applications.  \n"
+    st.write("Techbros IO "
              "  \n"
-             "If you need any tailor made software with similar data processing features please contact us.  \n"
+             "  \n"
+             "  \n"
              "  \n"
              "")
     selected = option_menu(
@@ -29,10 +29,10 @@ if selected == "LLD Data":
     Name = "Barbaros"
 
     st.title('LLD Database Model')
-    st.header('TI Number Reporting')
-    st.write("This module is a demo for CDR Statistical Reporting. ")
+    # st.header('TI Number Reporting')
+    st.write("This module is a demo for TI number database display/management")
 
-    st.divider()  # 👈 Draws a horizontal rule
+    # st.divider()  # 👈 Draws a horizontal rule
     st.header('LLD Details')
 
     db_name_read = "JSON_test"  # st.text_input('dB name to read')
