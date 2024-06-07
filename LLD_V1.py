@@ -49,6 +49,8 @@ if selected == "LLD Database Model":
     TI_numbers_list = df_1["TI_Number"].to_list()
     TI_Number_to_display = st.selectbox('Please Select The TI Number', TI_numbers_list)
 
+    document = []
+
     if st.button("Display TI Number information"):
         # document = collection.find_one({"TI_Number": TI_Number_to_display}).values()
         document = collection.find_one({"TI_Number": TI_Number_to_display})
@@ -56,7 +58,7 @@ if selected == "LLD Database Model":
         # st.write(type(document))
         # st.write(document)
 
-        def display_dict_1(d, level=0):
+    def display_dict_1(d, level=0):
             if isinstance(d, dict):
                 if d:
                     tabs = st.tabs(list(d.keys()))
@@ -71,8 +73,7 @@ if selected == "LLD Database Model":
                     st.write("Empty dictionary")
             else:
                 st.write(d)
-
-        def display_dict_2(d, level=0):
+    def display_dict_2(d, level=0):
             if isinstance(d, dict):
                 if d:
                     for key, value in d.items():
@@ -85,9 +86,7 @@ if selected == "LLD Database Model":
                     st.write("Empty dictionary")
             else:
                 st.write(d)
-
-
-        def display_dict_3(d, level=0):
+    def display_dict_3(d, level=0):
             if isinstance(d, dict):
                 for key, value in d.items():
                     st.markdown(f"### {key}")
@@ -98,9 +97,7 @@ if selected == "LLD Database Model":
                         st.write(f"**{key}:** {value}")
             else:
                 st.write(d)
-
-
-        def display_dict(d, level=0):
+    def display_dict(d, level=0):
             if isinstance(d, dict):
                 for key, value in d.items():
                     expander_key = f"{level}_{key}"
@@ -113,10 +110,8 @@ if selected == "LLD Database Model":
             else:
                 st.write(d)
 
-        # display_dict(document)
-        display_dict(document)
+    display_dict(document)
 
-        # display_dict(document)
 
 if selected == "CDR Reporting":
     import pandas as pd, zipfile,CDR_functions_old as cdrf
