@@ -53,11 +53,8 @@ if selected == "LLD Data":
         # document = collection.find_one({"TI_Number": TI_Number_to_display})
         document = collection.find_one({"TI_Number": TI_Number_to_display}, {"_id": 0, "field_to_exclude": 0})
         # document = collection.find_one({"TI_Number": TI_Number_to_display}, {"_id": 0, "field1": 0, "field2": 0})
-        # st.write(document)
+        st.write(document)
 
-        for key, value in document.items():
-            if key != "_id" and key != "field_to_exclude":
-                st.write(f"{key}: {value}")
 
 
 
