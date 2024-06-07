@@ -92,7 +92,7 @@ if selected == "LLD Database Model":
                         st.write(f"**{key}:** {value}")
             else:
                 st.write(d)
-    def display_dict_4(d, level=0):
+    def display_dict(d, level=0):
             if isinstance(d, dict):
                 for key, value in d.items():
                     expander_key = f"{level}_{key}"
@@ -104,8 +104,7 @@ if selected == "LLD Database Model":
                             st.write(f"**{key}:** {value}")
             else:
                 st.write(d)
-
-    def display_dict(d, level=0):
+    def display_dict_5(d, level=0):
         if isinstance(d, dict):
             for key, value in d.items():
                 expander_key = f"{level}_{key}"
