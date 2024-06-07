@@ -60,8 +60,16 @@ if selected == "LLD Data":
     json_string = json.dumps(document, indent=4)
     st.download_button(label="Download as JSON", data=json_string, file_name=TI_Number_to_display + '.json', mime="application/json")
 
+    import csv
+    import io
 
+    csv_buffer = io.StringIO()
+    csv_writer = csv.writer(csv_buffer)
+    csv_writer.writerow(document.keys())
+    csv_writer.writerow(document.values())
+    csv_string = csv_buffer.getvalue()
+    csv_buffer.close()
 
-
+    st.download_button(label="Download as CSV", data=csv_string, file_name=TI_Number_to_display + '.csv', mime="text/csv")
 
 
