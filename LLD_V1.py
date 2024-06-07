@@ -56,7 +56,7 @@ if selected == "LLD Database Model":
         # st.write(type(document))
         # st.write(document)
 
-        def display_dict(d, level=0):
+        def display_dict_old(d, level=0):
             if isinstance(d, dict):
                 if d:
                     tabs = st.tabs(list(d.keys()))
@@ -67,6 +67,20 @@ if selected == "LLD Database Model":
                                 display_dict(value, level + 1)
                             else:
                                 st.write(value)
+                else:
+                    st.write("Empty dictionary")
+            else:
+                st.write(d)
+
+        def display_dict(d, level=0):
+            if isinstance(d, dict):
+                if d:
+                    for key, value in d.items():
+                        st.write(f"**{key}:**")
+                        if isinstance(value, dict):
+                            display_dict(value, level + 1)
+                        else:
+                            st.write(value)
                 else:
                     st.write("Empty dictionary")
             else:
