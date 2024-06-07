@@ -70,7 +70,7 @@ if selected == "LLD Database Model":
                 st.write(d)
 
         # display_dict(document)
-        display_dict(document)
+        display_dict(document.values())
 
 if selected == "CDR Reporting":
     import pandas as pd, zipfile,CDR_functions_old as cdrf
