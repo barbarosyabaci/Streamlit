@@ -53,7 +53,7 @@ if selected == "LLD Database Model":
         # document = collection.find_one({"TI_Number": TI_Number_to_display}).values()
         document = collection.find_one({"TI_Number": TI_Number_to_display})
         # st.table(document)
-        st.write(type(document))
+        # st.write(type(document))
         # st.write(document)
 
         def display_dict(d, level=0):
