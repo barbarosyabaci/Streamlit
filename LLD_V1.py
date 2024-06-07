@@ -50,11 +50,9 @@ if selected == "LLD Database Model":
     TI_Number_to_display = st.selectbox('Please Select The TI Number', TI_numbers_list)
 
     if st.button("Display TI Number information"):
-        document = collection.find_one({{"TI_Number": TI_Number_to_display}})
+        document = collection.find_one({{"TI_Number": TI_Number_to_display}}).values()
         # st.table(document)
         st.write(type(document))
-    # st.table(df_1["TI_Number"].head(20))
-
 
 
 if selected == "CDR Reporting":
