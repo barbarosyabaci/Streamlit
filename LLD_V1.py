@@ -87,6 +87,8 @@ if selected == "LLD Database Model":
                 st.write(d)
 
         # display_dict(document)
+        display_dict_old(document)
+
         display_dict(document)
 
 if selected == "CDR Reporting":
