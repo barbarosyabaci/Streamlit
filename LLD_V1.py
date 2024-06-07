@@ -54,7 +54,7 @@ if selected == "LLD Data":
         document = collection.find_one({"TI_Number": TI_Number_to_display}, {"_id": 0, "field_to_exclude": 0})
         # document = collection.find_one({"TI_Number": TI_Number_to_display}, {"_id": 0, "field1": 0, "field2": 0})
         # st.write(document)
-        st.json(document, *, expanded=no)
+        st.json(document, expanded=False)
 
 
 
