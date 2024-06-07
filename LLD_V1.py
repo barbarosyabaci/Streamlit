@@ -51,7 +51,7 @@ if selected == "LLD Database Model":
 
     if st.button("Display TI Number information"):
         document = collection.find_one({{"TI_Number": TI_Number_to_display}})
-        st.table(document)
+        # st.table(document)
         st.write(document)
     # st.table(df_1["TI_Number"].head(20))
 
