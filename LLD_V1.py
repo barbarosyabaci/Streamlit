@@ -10,14 +10,14 @@ with st.sidebar:
              "")
     selected = option_menu(
         "LLD Modules",[
+        "LLD Data",
         "LLD Documentation",
-        "LLD Database Model",
         "LLD Database Update",
         "LLD Database Reports"
         # "path layer"
         ], menu_icon="cast", default_index=0)
 
-if selected == "LLD Database Model":
+if selected == "LLD Data":
     import pandas as pd, zipfile,CDR_functions_old as cdrf
     import pandas as pd
     import numpy as np
