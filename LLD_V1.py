@@ -57,7 +57,8 @@ if selected == "LLD Data":
         st.json(document, expanded=False)
 
     document = collection.find_one({"TI_Number": TI_Number_to_display}, {"_id": 0, "field_to_exclude": 0})
-    st.download_button(label="Download as Json", data = document, file_name= TI_Number_to_display + '.json', mime='text/csv')
+    json_string = json.dumps(document, indent=4)
+    st.download_button(label="Download as JSON", data=json_string, file_name=TI_Number_to_display + '.json', mime="application/json")
 
 
 
