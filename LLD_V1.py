@@ -48,7 +48,7 @@ if selected == "LLD Data":
 
     TI_numbers_list = df_1["TI_Number"].to_list()
     TI_Number_to_display = st.selectbox('Please Select The TI Number', TI_numbers_list)
-    TI_Number_to_update = st.selectbox('Please Select The TI Number to update', TI_numbers_list)
+    TI_Number_to_update = st.selectbox('Please Select The TI Number to update', TI_numbers_listkey = "second")
 
 
     if st.button("Display TI Number information"):
