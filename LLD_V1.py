@@ -47,8 +47,8 @@ if selected == "LLD Data":
     df_1 = pd.DataFrame(list(all_data_from_db)) # st.write(df_tokyo_mongodb)
 
     TI_numbers_list = df_1["TI_Number"].to_list()
-    TI_Number_to_display = st.selectbox('Please Select The TI Number', TI_numbers_list)
-    TI_Number_to_update = st.selectbox('Please Select The TI Number to update', TI_numbers_list,key = "second")
+    TI_Number_to_display = st.selectbox('Please Select The TI Number to Display', TI_numbers_list)
+
 
 
     if st.button("Display TI Number information"):
@@ -74,8 +74,33 @@ if selected == "LLD Data":
 
     st.download_button(label="Download as CSV", data=csv_string, file_name=TI_Number_to_display + '.csv', mime="text/csv")
 
+    # TI_Number_to_update = st.selectbox('Please Select The TI Number to update', TI_numbers_list, key="second")
+    uploaded_file = st.file_uploader("Choose a JSON file", type="json")
+    if uploaded_file is not None:
+        # st.write(uploaded_file.name[:-5])
+        TI_Number_to_update = uploaded_file.name[:-5]
+
     if st.button("Update information for TI Number as JSON"):
-        document_2 = collection.find_one({"TI_Number": TI_Number_to_update},key = "second")
+        document_to_update = collection.find_one({"TI_Number": TI_Number_to_update})
+
+        file_content = uploaded_file.read().decode("utf-8")
+        data = json.loads(file_content)
+
+        filter_query = {"TI_Number": TI_Number_to_update}  # Replace with your matching criteria if different
+        update_operation = {"$set": data}
+
+        result = collection.update_one(filter_query, update_operation)
+
+        # Display the result
+        if result.matched_count > 0:
+            st.success("Document updated successfully.")
+        else:
+            st.error("No document matched the query. No update was made.")
+
+if selected == "LLD Documentation":
+    st.image("S1_X2_Traffic_Flow.jpg", caption="S1&X2 IPv6 Traffic Flow", use_column_width=True)
+    st.image("5G_NR_NSA_intro.jpg", caption="S1&X2 IPv6 Traffic Flow", use_column_width=True)
+    st.image("S1_X2_solution.jpg", caption="S1&X2 IPv6 Traffic Flow", use_column_width=True)
 
 
 
