@@ -4,6 +4,7 @@ import os
 import streamlit as st
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
+from pymongo.server_api import ServerApi
 
 
 def setting(name, default=""):
@@ -25,10 +26,14 @@ def get_mongo_uri():
     return uri
 
 
-@st.cache_resource(show_spinner=False)
 def mongo_client(uri, **kwargs):
+    return _cached_mongo_client(uri)
+
+
+@st.cache_resource(show_spinner=False)
+def _cached_mongo_client(uri):
     client = MongoClient(uri, serverSelectionTimeoutMS=10000,
-                         connectTimeoutMS=10000, **kwargs)
+                         connectTimeoutMS=10000, server_api=ServerApi("1"))
     try:
         client.admin.command("ping")
     except PyMongoError:
